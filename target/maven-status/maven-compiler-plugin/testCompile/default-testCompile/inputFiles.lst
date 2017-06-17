@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-C:\Users\asullivan\Google Drive\Projects\cryptomancer\src\test\java\com\sullbrothers\coinbase\CoinbaseConnectionTest.java
-C:\Users\asullivan\Google Drive\Projects\cryptomancer\src\test\java\com\sullbrothers\coinbase\ExchangeRatesTest.java
-C:\Users\asullivan\Google Drive\Projects\cryptomancer\src\test\java\com\sullbrothers\app\AppTest.java
-=======
 C:\Users\asulliva\workspace\CryptoMancer\cryptomancer\src\test\java\com\sullbrothers\crypto\database\ConnectionTest.java
 C:\Users\asulliva\workspace\CryptoMancer\cryptomancer\src\test\java\com\sullbrothers\app\AppTest.java
->>>>>>> 080b86ceb33f9595daf57918b16a51fcea7fdc96
+C:\Users\asulliva\workspace\CryptoMancer\cryptomancer\src\test\java\com\sullbrothers\coinbase\ExchangeRatesTest.java
+C:\Users\asulliva\workspace\CryptoMancer\cryptomancer\src\test\java\com\sullbrothers\coinbase\CoinbaseConnectionTest.java

@@ -34,7 +34,6 @@ public class CryptomancerDatabase{
 
     private static void initialize(){
         instance = new CryptomancerDatabase();
-        return null;
     }
 
     public static CryptomancerDatabase getConnection(){

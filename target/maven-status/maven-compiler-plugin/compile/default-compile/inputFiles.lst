@@ -1,17 +1,7 @@
-<<<<<<< HEAD
-C:\Users\asullivan\Google Drive\Projects\cryptomancer\src\main\java\com\sullbrothers\crypto\app\App.java
-C:\Users\asullivan\Google Drive\Projects\cryptomancer\src\main\java\com\sullbrothers\crypto\app\package-info.java
-C:\Users\asullivan\Google Drive\Projects\cryptomancer\src\main\java\com\sullbrothers\crypto\coinbase\package-info.java
-C:\Users\asullivan\Google Drive\Projects\cryptomancer\src\main\java\com\sullbrothers\crypto\coinbase\CoinbaseConnection.java
-C:\Users\asullivan\Google Drive\Projects\cryptomancer\src\main\java\com\sullbrothers\crypto\sim\package-info.java
-C:\Users\asullivan\Google Drive\Projects\cryptomancer\src\main\java\com\sullbrothers\crypto\util\Globals.java
-C:\Users\asullivan\Google Drive\Projects\cryptomancer\src\main\java\com\sullbrothers\crypto\database\CryptomancerDatabase.java
-C:\Users\asullivan\Google Drive\Projects\cryptomancer\src\main\java\com\sullbrothers\crypto\database\package-info.java
-C:\Users\asullivan\Google Drive\Projects\cryptomancer\src\main\java\com\sullbrothers\crypto\mancer\package-info.java
-C:\Users\asullivan\Google Drive\Projects\cryptomancer\src\main\java\com\sullbrothers\crypto\util\package-info.java
-=======
 C:\Users\asulliva\workspace\CryptoMancer\cryptomancer\src\main\java\com\sullbrothers\crypto\util\Globals.java
+C:\Users\asulliva\workspace\CryptoMancer\cryptomancer\src\main\java\com\sullbrothers\crypto\coinbase\ExchangeRates.java
 C:\Users\asulliva\workspace\CryptoMancer\cryptomancer\src\main\java\com\sullbrothers\crypto\mancer\package-info.java
+C:\Users\asulliva\workspace\CryptoMancer\cryptomancer\src\main\java\com\sullbrothers\crypto\coinbase\CoinbaseConnection.java
 C:\Users\asulliva\workspace\CryptoMancer\cryptomancer\src\main\java\com\sullbrothers\crypto\util\package-info.java
 C:\Users\asulliva\workspace\CryptoMancer\cryptomancer\src\main\java\com\sullbrothers\crypto\database\CryptomancerDatabase.java
 C:\Users\asulliva\workspace\CryptoMancer\cryptomancer\src\main\java\com\sullbrothers\crypto\database\package-info.java
@@ -20,4 +10,3 @@ C:\Users\asulliva\workspace\CryptoMancer\cryptomancer\src\main\java\com\sullbrot
 C:\Users\asulliva\workspace\CryptoMancer\cryptomancer\src\main\java\com\sullbrothers\crypto\app\App.java
 C:\Users\asulliva\workspace\CryptoMancer\cryptomancer\src\main\java\com\sullbrothers\crypto\database\RateHistoryDAO.java
 C:\Users\asulliva\workspace\CryptoMancer\cryptomancer\src\main\java\com\sullbrothers\crypto\coinbase\package-info.java
->>>>>>> 080b86ceb33f9595daf57918b16a51fcea7fdc96
