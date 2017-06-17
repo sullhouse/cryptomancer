@@ -30,6 +30,7 @@ public class CryptomancerDatabase{
 
     public static CryptomancerDatabase initialize(){
         instance = new CryptomancerDatabase();
+        return null;
     }
 
     public static CryptomancerDatabase getConnection(){

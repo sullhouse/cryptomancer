@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite tests="1" failures="1" name="com.sullbrothers.coinbase.ExchangeRatesTest" time="0.391" errors="0" skipped="0">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_72\jre\bin"/>
+    <property name="java.vm.version" value="25.72-b15"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="maven.multiModuleProjectDirectory" value="C:\Users\asullivan\Google Drive\Projects\cryptomancer"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="path.separator" value=";"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="US"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="C:\Users\asullivan\Google Drive\Projects\cryptomancer"/>
+    <property name="java.runtime.version" value="1.8.0_72-b15"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.8.0_72\jre\lib\endorsed"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="C:\Users\ASULLI~1\AppData\Local\Temp\"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="classworlds.conf" value="C:\Program Files (x86)\apache-maven-3.5.0\bin\..\bin\m2.conf"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_72\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Lenovo\Fingerprint Manager Pro\;C:\Program Files (x86)\Common Files\Lenovo;C:\Program Files\Condusiv Technologies\ExpressCache\;C:\Program Files (x86)\Common Files\lenovo\easyplussdk\bin;C:\SWTOOLS\ReadyApps;C:\Program Files (x86)\Google\Google Apps Sync\;C:\Program Files (x86)\Google\Google Apps Migration\;C:\Program Files\nodejs\;C:\Program Files (x86)\Skype\Phone\;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Microsoft VS Code\bin;C:\Users\asullivan\AppData\Local\Microsoft\WindowsApps;C:\Users\asullivan\AppData\Roaming\npm;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files (x86)\apache-maven-3.5.0\bin;."/>
+    <property name="maven.conf" value="C:\Program Files (x86)\apache-maven-3.5.0\bin\../conf"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="52.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="10.0"/>
+    <property name="library.jansi.path" value="C:\Program Files (x86)\apache-maven-3.5.0\bin\..\lib\jansi-native\windows64"/>
+    <property name="user.home" value="C:\Users\asullivan"/>
+    <property name="user.timezone" value="America/New_York"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="file.encoding" value="Cp1252"/>
+    <property name="user.name" value="asullivan"/>
+    <property name="java.class.path" value="C:\Program Files (x86)\apache-maven-3.5.0\bin\..\boot\plexus-classworlds-2.5.2.jar"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk1.8.0_72\jre"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher install"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="en"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.8.0_72"/>
+    <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.8.0_72\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"/>
+    <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.8.0_72\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_72\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_72\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.8.0_72\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_72\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_72\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_72\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_72\jre\classes"/>
+    <property name="sun.stderr.encoding" value="cp437"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="C:\Program Files (x86)\apache-maven-3.5.0\bin\.."/>
+    <property name="file.separator" value="\"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.stdout.encoding" value="cp437"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+  </properties>
+  <testcase classname="com.sullbrothers.coinbase.ExchangeRatesTest" name="testApp" time="0.391">
+    <failure message="Exchange rates map should include BTC greater than zero" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: Exchange rates map should include BTC greater than zero
+	at junit.framework.Assert.fail(Assert.java:47)
+	at junit.framework.Assert.assertTrue(Assert.java:20)
+	at com.sullbrothers.coinbase.ExchangeRatesTest.testApp(ExchangeRatesTest.java:38)
+</failure>
+    <system-out>Sat Jun 17 03:33:42 EDT 2017
+{&quot;data&quot;:{&quot;currency&quot;:&quot;BTC&quot;,&quot;rates&quot;:{&quot;AED&quot;:&quot;9165.71&quot;,&quot;AFN&quot;:&quot;169818.78&quot;,&quot;ALL&quot;:&quot;296839.72&quot;,&quot;AMD&quot;:&quot;1203498.26&quot;,&quot;ANG&quot;:&quot;4443.34&quot;,&quot;AOA&quot;:&quot;414044.63&quot;,&quot;ARS&quot;:&quot;39995.29&quot;,&quot;AUD&quot;:&quot;3275.36&quot;,&quot;AWG&quot;:&quot;4478.49&quot;,&quot;AZN&quot;:&quot;4227.63&quot;,&quot;BAM&quot;:&quot;4367.96&quot;,&quot;BBD&quot;:&quot;4991.00&quot;,&quot;BDT&quot;:&quot;201654.37&quot;,&quot;BGN&quot;:&quot;4363.68&quot;,&quot;BHD&quot;:&quot;941.273&quot;,&quot;BIF&quot;:&quot;4304738&quot;,&quot;BMD&quot;:&quot;2495.50&quot;,&quot;BND&quot;:&quot;3452.69&quot;,&quot;BOB&quot;:&quot;17349.77&quot;,&quot;BRL&quot;:&quot;8214.06&quot;,&quot;BSD&quot;:&quot;2495.50&quot;,&quot;BTC&quot;:&quot;1.00000000&quot;,&quot;BTN&quot;:&quot;160868.77&quot;,&quot;BWP&quot;:&quot;25486.38&quot;,&quot;BYN&quot;:&quot;4704.41&quot;,&quot;BYR&quot;:&quot;49975507&quot;,&quot;BZD&quot;:&quot;5017.54&quot;,&quot;CAD&quot;:&quot;3297.17&quot;,&quot;CDF&quot;:&quot;3620970.50&quot;,&quot;CHF&quot;:&quot;2430.45&quot;,&quot;CLF&quot;:&quot;61.6938&quot;,&quot;CLP&quot;:&quot;1660880&quot;,&quot;CNY&quot;:&quot;16994.98&quot;,&quot;COP&quot;:&quot;7422864.75&quot;,&quot;CRC&quot;:&quot;1421686.35&quot;,&quot;CUC&quot;:&quot;2495.50&quot;,&quot;CVE&quot;:&quot;246992.11&quot;,&quot;CZK&quot;:&quot;58347.16&quot;,&quot;DJF&quot;:&quot;445871&quot;,&quot;DKK&quot;:&quot;16572.87&quot;,&quot;DOP&quot;:&quot;118561.20&quot;,&quot;DZD&quot;:&quot;270761.75&quot;,&quot;EEK&quot;:&quot;36468.47&quot;,&quot;EGP&quot;:&quot;45279.60&quot;,&quot;ERN&quot;:&quot;38269.99&quot;,&quot;ETB&quot;:&quot;58145.15&quot;,&quot;ETH&quot;:&quot;7.05467372&quot;,&quot;EUR&quot;:&quot;2247.00&quot;,&quot;FJD&quot;:&quot;5126.37&quot;,&quot;FKP&quot;:&quot;1952.67&quot;,&quot;GBP&quot;:&quot;1954.13&quot;,&quot;GEL&quot;:&quot;6011.71&quot;,&quot;GGP&quot;:&quot;1952.67&quot;,&quot;GHS&quot;:&quot;10992.68&quot;,&quot;GIP&quot;:&quot;1952.67&quot;,&quot;GMD&quot;:&quot;114418.68&quot;,&quot;GNF&quot;:&quot;22359680&quot;,&quot;GTQ&quot;:&quot;18324.35&quot;,&quot;GYD&quot;:&quot;518706.45&quot;,&quot;HKD&quot;:&quot;19466.91&quot;,&quot;HNL&quot;:&quot;58581.07&quot;,&quot;HRK&quot;:&quot;16498.56&quot;,&quot;HTG&quot;:&quot;154493.21&quot;,&quot;HUF&quot;:&quot;685675&quot;,&quot;IDR&quot;:&quot;33182179.76&quot;,&quot;ILS&quot;:&quot;8781.93&quot;,&quot;IMP&quot;:&quot;1952.67&quot;,&quot;INR&quot;:&quot;160705.87&quot;,&quot;IQD&quot;:&quot;2949681.000&quot;,&quot;ISK&quot;:&quot;251846&quot;,&quot;JEP&quot;:&quot;1952.67&quot;,&quot;JMD&quot;:&quot;323910.39&quot;,&quot;JOD&quot;:&quot;1772.554&quot;,&quot;JPY&quot;:&quot;276689&quot;,&quot;KES&quot;:&quot;258396.55&quot;,&quot;KGS&quot;:&quot;170899.72&quot;,&quot;KHR&quot;:&quot;10159180.50&quot;,&quot;KMF&quot;:&quot;1097396&quot;,&quot;KRW&quot;:&quot;2827277&quot;,&quot;KWD&quot;:&quot;757.252&quot;,&quot;KYD&quot;:&quot;2080.30&quot;,&quot;KZT&quot;:&quot;793531.86&quot;,&quot;LAK&quot;:&quot;20577893.00&quot;,&quot;LBP&quot;:&quot;3773196.00&quot;,&quot;LKR&quot;:&quot;382020.52&quot;,&quot;LRD&quot;:&quot;232067.96&quot;,&quot;LSL&quot;:&quot;31929.92&quot;,&quot;LTC&quot;:&quot;63.93861893&quot;,&quot;LTL&quot;:&quot;8047.60&quot;,&quot;LVL&quot;:&quot;1637.70&quot;,&quot;LYD&quot;:&quot;3481.222&quot;,&quot;MAD&quot;:&quot;24430.94&quot;,&quot;MDL&quot;:&quot;45492.90&quot;,&quot;MGA&quot;:&quot;7935690.0&quot;,&quot;MKD&quot;:&quot;137252.50&quot;,&quot;MMK&quot;:&quot;3417113.25&quot;,&quot;MNT&quot;:&quot;5891724.81&quot;,&quot;MOP&quot;:&quot;20054.03&quot;,&quot;MRO&quot;:&quot;904618.4&quot;,&quot;MTL&quot;:&quot;1706.27&quot;,&quot;MUR&quot;:&quot;87026.82&quot;,&quot;MVR&quot;:&quot;38929.25&quot;,&quot;MWK&quot;:&quot;1824210.50&quot;,&quot;MXN&quot;:&quot;44697.76&quot;,&quot;MYR&quot;:&quot;10672.01&quot;,&quot;MZN&quot;:&quot;149730.00&quot;,&quot;NAD&quot;:&quot;31954.88&quot;,&quot;NGN&quot;:&quot;809789.75&quot;,&quot;NIO&quot;:&quot;74503.15&quot;,&quot;NOK&quot;:&quot;21087.55&quot;,&quot;NPR&quot;:&quot;257202.05&quot;,&quot;NZD&quot;:&quot;3441.92&quot;,&quot;OMR&quot;:&quot;960.912&quot;,&quot;PAB&quot;:&quot;2495.50&quot;,&quot;PEN&quot;:&quot;8164.03&quot;,&quot;PGK&quot;:&quot;8207.70&quot;,&quot;PHP&quot;:&quot;124512.97&quot;,&quot;PKR&quot;:&quot;261403.62&quot;,&quot;PLN&quot;:&quot;9378.94&quot;,&quot;PYG&quot;:&quot;13876103&quot;,&quot;QAR&quot;:&quot;9159.78&quot;,&quot;RON&quot;:&quot;10226.59&quot;,&quot;RSD&quot;:&quot;271934.64&quot;,&quot;RUB&quot;:&quot;144101.15&quot;,&quot;RWF&quot;:&quot;2068770&quot;,&quot;SAR&quot;:&quot;9358.00&quot;,&quot;SBD&quot;:&quot;19568.17&quot;,&quot;SCR&quot;:&quot;33689.12&quot;,&quot;SEK&quot;:&quot;21738.38&quot;,&quot;SGD&quot;:&quot;3451.23&quot;,&quot;SHP&quot;:&quot;1952.67&quot;,&quot;SLL&quot;:&quot;18742096.82&quot;,&quot;SOS&quot;:&quot;1467354.00&quot;,&quot;SRD&quot;:&quot;18759.92&quot;,&quot;SSP&quot;:&quot;307057.06&quot;,&quot;STD&quot;:&quot;54699623.33&quot;,&quot;SVC&quot;:&quot;21843.46&quot;,&quot;SZL&quot;:&quot;31929.92&quot;,&quot;THB&quot;:&quot;84670.44&quot;,&quot;TJS&quot;:&quot;21992.36&quot;,&quot;TMT&quot;:&quot;8734.22&quot;,&quot;TND&quot;:&quot;6119.969&quot;,&quot;TOP&quot;:&quot;5660.65&quot;,&quot;TRY&quot;:&quot;8741.27&quot;,&quot;TTD&quot;:&quot;16800.62&quot;,&quot;TWD&quot;:&quot;75783.34&quot;,&quot;TZS&quot;:&quot;5586800.62&quot;,&quot;UAH&quot;:&quot;64967.54&quot;,&quot;UGX&quot;:&quot;8954353&quot;,&quot;USD&quot;:&quot;2495.50&quot;,&quot;UYU&quot;:&quot;70606.14&quot;,&quot;UZS&quot;:&quot;9782360.00&quot;,&quot;VEF&quot;:&quot;24942.53&quot;,&quot;VND&quot;:&quot;56643435&quot;,&quot;VUV&quot;:&quot;270157&quot;,&quot;WST&quot;:&quot;6326.21&quot;,&quot;XAF&quot;:&quot;1464425&quot;,&quot;XAG&quot;:&quot;149&quot;,&quot;XAU&quot;:&quot;2&quot;,&quot;XCD&quot;:&quot;6744.21&quot;,&quot;XDR&quot;:&quot;1807&quot;,&quot;XOF&quot;:&quot;1465481&quot;,&quot;XPD&quot;:&quot;3&quot;,&quot;XPF&quot;:&quot;266831&quot;,&quot;XPT&quot;:&quot;3&quot;,&quot;YER&quot;:&quot;624436.49&quot;,&quot;ZAR&quot;:&quot;31964.97&quot;,&quot;ZMK&quot;:&quot;13109049.30&quot;,&quot;ZMW&quot;:&quot;23003.56&quot;,&quot;ZWL&quot;:&quot;804356.49&quot;}}}
+FJD = 5126.37
+MXN = 44697.76
+STD = 5.469962333E7
+LVL = 1637.7
+SCR = 33689.12
+CDF = 3620970.5
+BBD = 4991.0
+GTQ = 18324.35
+CLP = 1660880.0
+HNL = 58581.07
+UGX = 8954353.0
+ZAR = 31964.97
+TND = 6119.969
+CUC = 2495.5
+BSD = 2495.5
+SLL = 1.874209682E7
+IQD = 2949681.0
+GMD = 114418.68
+TWD = 75783.34
+RSD = 271934.64
+DOP = 118561.2
+KMF = 1097396.0
+MYR = 10672.01
+FKP = 1952.67
+XOF = 1465481.0
+GEL = 6011.71
+BTC = 1.0
+UYU = 70606.14
+MAD = 24430.94
+CVE = 246992.11
+TOP = 5660.65
+AZN = 4227.63
+OMR = 960.912
+PGK = 8207.7
+KES = 258396.55
+SEK = 21738.38
+BTN = 160868.77
+UAH = 64967.54
+GNF = 2.235968E7
+ERN = 38269.99
+MZN = 149730.0
+SVC = 21843.46
+ARS = 39995.29
+QAR = 9159.78
+MRO = 904618.4
+XPD = 3.0
+CNY = 16994.98
+THB = 84670.44
+UZS = 9782360.0
+XPF = 266831.0
+BDT = 201654.37
+LYD = 3481.222
+BMD = 2495.5
+KWD = 757.252
+PHP = 124512.97
+XPT = 3.0
+RUB = 144101.15
+PYG = 1.3876103E7
+ISK = 251846.0
+JMD = 323910.39
+COP = 7422864.75
+MKD = 137252.5
+USD = 2495.5
+DZD = 270761.75
+PAB = 2495.5
+GGP = 1952.67
+SGD = 3451.23
+ETB = 58145.15
+JEP = 1952.67
+KGS = 170899.72
+SOS = 1467354.0
+VEF = 24942.53
+VUV = 270157.0
+LAK = 2.0577893E7
+ETH = 7.05467372
+BND = 3452.69
+ZMK = 1.31090493E7
+XAF = 1464425.0
+LRD = 232067.96
+XAG = 149.0
+CHF = 2430.45
+HRK = 16498.56
+ALL = 296839.72
+DJF = 445871.0
+MTL = 1706.27
+ZMW = 23003.56
+TZS = 5586800.62
+VND = 5.6643435E7
+XAU = 2.0
+AUD = 3275.36
+ILS = 8781.93
+GHS = 10992.68
+GYD = 518706.45
+BOB = 17349.77
+KHR = 1.01591805E7
+MDL = 45492.9
+IDR = 3.318217976E7
+KYD = 2080.3
+AMD = 1203498.26
+BWP = 25486.38
+SHP = 1952.67
+TRY = 8741.27
+LBP = 3773196.0
+TJS = 21992.36
+JOD = 1772.554
+AED = 9165.71
+HKD = 19466.91
+RWF = 2068770.0
+EUR = 2247.0
+LSL = 31929.92
+DKK = 16572.87
+CAD = 3297.17
+BGN = 4363.68
+EEK = 36468.47
+MMK = 3417113.25
+MUR = 87026.82
+NOK = 21087.55
+IMP = 1952.67
+ZWL = 804356.49
+GIP = 1952.67
+RON = 10226.59
+LKR = 382020.52
+NGN = 809789.75
+CRC = 1421686.35
+CZK = 58347.16
+PKR = 261403.62
+XCD = 6744.21
+ANG = 4443.34
+HTG = 154493.21
+LTC = 63.93861893
+BHD = 941.273
+KZT = 793531.86
+SRD = 18759.92
+SZL = 31929.92
+LTL = 8047.6
+SAR = 9358.0
+TTD = 16800.62
+YER = 624436.49
+MVR = 38929.25
+AFN = 169818.78
+INR = 160705.87
+AWG = 4478.49
+KRW = 2827277.0
+NPR = 257202.05
+JPY = 276689.0
+MNT = 5891724.81
+AOA = 414044.63
+PLN = 9378.94
+GBP = 1954.13
+SBD = 19568.17
+BYN = 4704.41
+HUF = 685675.0
+BYR = 4.9975507E7
+BIF = 4304738.0
+MWK = 1824210.5
+MGA = 7935690.0
+XDR = 1807.0
+BZD = 5017.54
+BAM = 4367.96
+EGP = 45279.6
+MOP = 20054.03
+NAD = 31954.88
+SSP = 307057.06
+NIO = 74503.15
+PEN = 8164.03
+NZD = 3441.92
+WST = 6326.21
+TMT = 8734.22
+CLF = 61.6938
+BRL = 8214.06
+</system-out>
+  </testcase>
+</testsuite>

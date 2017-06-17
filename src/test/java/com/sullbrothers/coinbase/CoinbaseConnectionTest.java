@@ -1,4 +1,6 @@
-package com.sullbrothers.app;
+package com.sullbrothers.coinbase;
+
+import com.sullbrothers.crypto.coinbase.CoinbaseConnection;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -7,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Unit test for simple App.
  */
-public class AppTest 
+public class CoinbaseConnectionTest 
     extends TestCase
 {
     /**
@@ -15,7 +17,7 @@ public class AppTest
      *
      * @param testName name of the test case
      */
-    public AppTest( String testName )
+    public CoinbaseConnectionTest( String testName )
     {
         super( testName );
     }
@@ -25,7 +27,7 @@ public class AppTest
      */
     public static Test suite()
     {
-        return new TestSuite( AppTest.class );
+        return new TestSuite( CoinbaseConnectionTest.class );
     }
 
     /**
@@ -33,7 +35,8 @@ public class AppTest
      */
     public void testApp()
     {
-        assertTrue( true );
+        CoinbaseConnection coinbaseConnection = new CoinbaseConnection();
+        assertNotNull("Coinbase Connection should return exchange rates", coinbaseConnection.getExchangeRates("BTC"));
     }
 
 }
