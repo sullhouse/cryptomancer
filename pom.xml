@@ -15,9 +15,18 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+<<<<<<< HEAD
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>
       <version>20151123</version>
     </dependency>
+=======
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.17</version>
+      <type>jar</type>
+      <scope>runtime</scope>
+  </dependency>
+>>>>>>> 080b86ceb33f9595daf57918b16a51fcea7fdc96
   </dependencies>
 </project>
