@@ -1,4 +1,4 @@
-package com.sullbrothers.app;
+package com.sullbrothers.crypto.app;
 
 /**
  * Hello world!
