@@ -42,5 +42,4 @@ public class ExchangeRatesTest
 
         assertNotNull("Exchange rates timestamp should exist", exchangeRates.getTimestamp());
     }
-
 }

@@ -1,6 +1,2 @@
-com\sullbrothers\crypto\coinbase\CoinbaseConnection.class
-com\sullbrothers\crypto\database\RateHistoryDAO.class
 com\sullbrothers\crypto\coinbase\ExchangeRates.class
-com\sullbrothers\crypto\database\CryptomancerDatabase.class
-com\sullbrothers\crypto\database\RateHistoryDAO$RateHistory.class
 com\sullbrothers\crypto\app\App.class

@@ -6,27 +6,27 @@
             "type": "java",
             "request": "launch",
             "stopOnEntry": true,
-            "jdkPath": "${env:JAVA_HOME}/bin",
-            "cwd": "${fileDirname}",
-            "startupClass": "${fileBasename}",
+            "cwd": "${fileDirname}", // ${fileDirname}: the current opened file's dirname
+            "startupClass": "com.sullbrothers.crypto.app.${fileBasename}", // ${fileBasename}: the current opened file's basename
             "options": [
                 "-classpath",
-                "\"${fileDirname};.\""
-            ]
+                "${workspaceRoot}/target/classes" // ${fileDirname}: the current opened file's dirname
+            ],
+            "jdkPath": "${env:JAVA_HOME}/bin", // ${env.JAVA_HOME}: reference environment variables
         },
         {
             "name": "Java Console App",
             "type": "java",
             "request": "launch",
             "stopOnEntry": true,
-            "jdkPath": "${env:JAVA_HOME}/bin",
             "cwd": "${fileDirname}",
             "startupClass": "${fileBasename}",
             "options": [
                 "-classpath",
                 "\"${fileDirname};.\""
             ],
-            "externalConsole": true
+            "externalConsole": true,
+            "jdkPath": "${env:JAVA_HOME}/bin",
         }
     ]
 }

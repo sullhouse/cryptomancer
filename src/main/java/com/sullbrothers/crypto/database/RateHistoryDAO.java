@@ -7,21 +7,24 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * RateHistoryDAO
  */
 public class RateHistoryDAO {
 
-    private static String BASE_STMT = "SELECT * FROM rate_history WHERE DATE >= '%s' AND DATE <= '%s'";
+    private static String GET_BASE_STMT = "SELECT * FROM rate_history WHERE DATE >= '%s' AND DATE <= '%s'";
+    private static String PUT_BASE_STMT = "INSERT INTO rate_history (date, BTC, ETH, LTC, USD) VALUES('%s', %s,%s,%s,%s) ON DUPLICATE KEY UPDATE date='%s', BTC=%s, ETH=%s, LTC=%s, USD=%s;";
 
     private List<RateHistory> rateHistory;
 
     public RateHistoryDAO (Date startDate, Date endDate) throws SQLException{
         String startDateStr = CryptomancerDatabase.getSqlDateString(startDate);
         String endDateStr = CryptomancerDatabase.getSqlDateString(endDate);
-        System.out.println("Running query: " + String.format(BASE_STMT, startDateStr, endDateStr));
-        ResultSet rs = CryptomancerDatabase.runQuery(String.format(BASE_STMT, startDateStr, endDateStr));
+        System.out.println("Running query: " + String.format(GET_BASE_STMT, startDateStr, endDateStr));
+        ResultSet rs = CryptomancerDatabase.runQuery(String.format(GET_BASE_STMT, startDateStr, endDateStr));
         rateHistory = new ArrayList<RateHistory>();
         while(rs.next()){
             Date rhDate = rs.getDate(2);
@@ -31,6 +34,24 @@ public class RateHistoryDAO {
             }
             rateHistory.add(new RateHistory(rhDate, rhRates));
         }
+    }
+
+    public RateHistoryDAO (Date timestamp, Map<String, Double> rates) throws SQLException{
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        String timestampStr = df.format(timestamp);
+        Double BTC = rates.get("BTC");
+        Double ETH = rates.get("ETH");
+        Double LTC = rates.get("LTC");
+        Double USD = rates.get("USD");
+
+        System.out.println("Running query: " + String.format(PUT_BASE_STMT, timestampStr, BTC, ETH, LTC, USD, timestampStr, BTC, ETH, LTC, USD));
+        CryptomancerDatabase.runUpdate(String.format(PUT_BASE_STMT, timestampStr, BTC, ETH, LTC, USD, timestampStr, BTC, ETH, LTC, USD));
+
+        RateHistory rh = new RateHistory(timestamp, rates);
+
+        rateHistory = new ArrayList<RateHistory>();
+        rateHistory.add(rh);
     }
 
     public String toString(){

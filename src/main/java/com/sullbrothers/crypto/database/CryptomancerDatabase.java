@@ -32,6 +32,11 @@ public class CryptomancerDatabase{
         return stmt.executeQuery(query);
     }
 
+    protected static void runUpdate(String query) throws SQLException{
+        Statement stmt = getConnection().internalConnection.createStatement();
+        stmt.executeUpdate(query);
+    }
+
     private static void initialize(){
         instance = new CryptomancerDatabase();
     }
