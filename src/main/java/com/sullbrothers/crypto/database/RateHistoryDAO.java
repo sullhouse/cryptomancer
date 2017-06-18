@@ -63,6 +63,10 @@ public class RateHistoryDAO {
         return sb.toString();
     }
 
+    public static RateHistory getLatest(){
+        return null;
+    }
+
     /**
      * RateHistory
      */
