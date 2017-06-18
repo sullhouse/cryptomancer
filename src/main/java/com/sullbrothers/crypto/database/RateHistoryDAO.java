@@ -20,6 +20,11 @@ public class RateHistoryDAO {
 
     private List<RateHistory> rateHistory;
 
+
+    public static RateHistory getLatest() throws SQLException {
+        return null;
+    }
+
     public RateHistoryDAO (Date startDate, Date endDate) throws SQLException{
         String startDateStr = CryptomancerDatabase.getSqlDateString(startDate);
         String endDateStr = CryptomancerDatabase.getSqlDateString(endDate);
@@ -54,6 +59,10 @@ public class RateHistoryDAO {
         rateHistory.add(rh);
     }
 
+    public List<RateHistory> getAllHistoricalRates(){
+        return this.rateHistory;
+    }
+
     public String toString(){
         StringBuilder sb = new StringBuilder("RATE_HISTORIES[");
         for(RateHistory rh : this.rateHistory){
@@ -63,14 +72,10 @@ public class RateHistoryDAO {
         return sb.toString();
     }
 
-    public static RateHistory getLatest(){
-        return null;
-    }
-
     /**
      * RateHistory
      */
-    private class RateHistory {
+    public class RateHistory {
     
         private Date date;
         private Map<String, Double> rates;
