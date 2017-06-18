@@ -11,6 +11,13 @@ public class ExchangeRates{
     public ExchangeRates(String currency) {
         this.currency = currency;
     }
+
+    public ExchangeRates(String currency, Date timestamp, List<ExchangeRate> exchangeRates){
+        this.exchangeRates = exchangeRates;
+        this.currency = currency;
+        this.timestamp = timestamp;
+    }
+
     public void getExchangeRatesFromCoinbase() {
         CoinbaseConnection coinbaseConnection = new CoinbaseConnection();
         timestamp = new Date();

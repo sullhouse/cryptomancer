@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<<<<<<< HEAD
-<testsuite tests="1" failures="0" name="com.sullbrothers.coinbase.ExchangeRatesTest" time="0.661" errors="0" skipped="0">
-=======
-<testsuite tests="1" failures="0" name="com.sullbrothers.coinbase.ExchangeRatesTest" time="0.215" errors="0" skipped="0">
->>>>>>> 36d3c18790392c183cb68b5e690a01e5b1c92650
+<testsuite tests="1" failures="0" name="com.sullbrothers.crypto.sim.SimulationEngineTest" time="0.019" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_73\jre\bin"/>
@@ -69,9 +65,5 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-<<<<<<< HEAD
-  <testcase classname="com.sullbrothers.coinbase.ExchangeRatesTest" name="testApp" time="0.661"/>
-=======
-  <testcase classname="com.sullbrothers.coinbase.ExchangeRatesTest" name="testApp" time="0.215"/>
->>>>>>> 36d3c18790392c183cb68b5e690a01e5b1c92650
+  <testcase classname="com.sullbrothers.crypto.sim.SimulationEngineTest" name="testSimulationEngine" time="0.019"/>
 </testsuite>
