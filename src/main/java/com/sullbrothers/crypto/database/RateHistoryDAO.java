@@ -4,7 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.Map;
-import java.util.HashMap;
+
+import com.sullbrothers.crypto.coinbase.ExchangeRate;
+import com.sullbrothers.crypto.coinbase.ExchangeRates;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.text.DateFormat;
@@ -28,27 +31,34 @@ public class RateHistoryDAO {
         rateHistory = new ArrayList<RateHistory>();
         while(rs.next()){
             Date rhDate = rs.getDate(2);
-            Map<String, Double> rhRates = new HashMap<String, Double>();
+            List<ExchangeRate> rhRates = new ArrayList<ExchangeRate>();
             for(int i = 3; i <= rs.getMetaData().getColumnCount(); i++){
-                rhRates.put(rs.getMetaData().getColumnName(i), rs.getDouble(i));
+                ExchangeRate rhRate = new ExchangeRate(rs.getMetaData().getColumnName(i));
+                rhRate.setPrice(rs.getDouble(i));
+                rhRates.add(rhRate);
             }
             rateHistory.add(new RateHistory(rhDate, rhRates));
         }
     }
 
-    public RateHistoryDAO (Date timestamp, Map<String, Double> rates) throws SQLException{
+    public RateHistoryDAO (Date timestamp, ExchangeRates rates) throws SQLException{
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         String timestampStr = df.format(timestamp);
-        Double BTC = rates.get("BTC");
-        Double ETH = rates.get("ETH");
-        Double LTC = rates.get("LTC");
-        Double USD = rates.get("USD");
+        Double BTC = rates.getExchangeRateByCurrency("BTC").getPrice();
+        Double ETH = rates.getExchangeRateByCurrency("ETH").getPrice();
+        Double LTC = rates.getExchangeRateByCurrency("LTC").getPrice();
+        Double USD = rates.getExchangeRateByCurrency("USD").getPrice();
 
         System.out.println("Running query: " + String.format(PUT_BASE_STMT, timestampStr, BTC, ETH, LTC, USD, timestampStr, BTC, ETH, LTC, USD));
-        CryptomancerDatabase.runUpdate(String.format(PUT_BASE_STMT, timestampStr, BTC, ETH, LTC, USD, timestampStr, BTC, ETH, LTC, USD));
+        int rateHistoryId = CryptomancerDatabase.runUpdate(String.format(PUT_BASE_STMT, timestampStr, BTC, ETH, LTC, USD, timestampStr, BTC, ETH, LTC, USD));
 
-        RateHistory rh = new RateHistory(timestamp, rates);
+        CryptomancerDatabase.runUpdate(getPutDetailStatement(rateHistoryId, rates.getExchangeRateByCurrency("BTC")));
+        CryptomancerDatabase.runUpdate(getPutDetailStatement(rateHistoryId, rates.getExchangeRateByCurrency("ETH")));
+        CryptomancerDatabase.runUpdate(getPutDetailStatement(rateHistoryId, rates.getExchangeRateByCurrency("LTC")));
+        CryptomancerDatabase.runUpdate(getPutDetailStatement(rateHistoryId, rates.getExchangeRateByCurrency("USD")));
+
+        RateHistory rh = new RateHistory(timestamp, rates.getExchangeRates());
 
         rateHistory = new ArrayList<RateHistory>();
         rateHistory.add(rh);
@@ -63,15 +73,68 @@ public class RateHistoryDAO {
         return sb.toString();
     }
 
+    private String getPutDetailStatement(int rateHistoryId, ExchangeRate exchangeRate) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        String s = "";
+        s += "INSERT INTO rate_history_detail ("
+            + "rate_history_id,"
+            + "currency,"
+            + "from_currency,"
+            + "price";
+        if (exchangeRate.getType()>0) s += ",type"; 
+        if (exchangeRate.getMarket()!=null) s += ",market";
+        if (exchangeRate.getFlags()>0) s += ",flags";
+        if (exchangeRate.getLastUpdate()!=null) s += ",last_update";
+        if (exchangeRate.getLastVolume()!=null) s += ",last_volume";
+        if (exchangeRate.getLastVolumeTo()!=null) s += ",last_volume_to";
+        if (exchangeRate.getLastTradeId()>0) s += ",last_trade_id";
+        if (exchangeRate.getVolume24hour()!=null) s += ",volume_24_hour";
+        if (exchangeRate.getVolume24hourTo()!=null) s += ",volume_24_hour_to";
+        if (exchangeRate.getOpen24hour()!=null) s += ",open_24_hour";
+        if (exchangeRate.getHigh24hour()!=null) s += ",high_24_hour";
+        if (exchangeRate.getLow24hour()!=null) s += ",low_24_hour";
+        if (exchangeRate.getLastMarket()!=null) s += ",last_market";
+        if (exchangeRate.getChange24hour()!=null) s += ",change_24_hour";
+        if (exchangeRate.getChangePct24hour()!=null) s += ",change_percent_24_hour";
+        if (exchangeRate.getSupply()!=null) s += ",supply";
+        if (exchangeRate.getMarketCap()!=null) s += ",market_cap";
+        s += ") VALUES ("
+            + rateHistoryId + ",";
+        s += "'" + exchangeRate.getCurrency() + "',";
+        s += "'" + exchangeRate.getFromCurrency() + "',";
+        s += exchangeRate.getPrice();
+        if (exchangeRate.getType()>0) s +=  "," + exchangeRate.getType();
+        if (exchangeRate.getMarket()!=null) s +=  ",''" + exchangeRate.getMarket() + "'";
+        if (exchangeRate.getFlags()>0) s +=  "," + exchangeRate.getFlags();
+        if (exchangeRate.getLastUpdate()!=null) s +=  ",''" + exchangeRate.getLastUpdate() + "'";
+        if (exchangeRate.getLastVolume()!=null) s +=  "," + exchangeRate.getLastVolume();
+        if (exchangeRate.getLastVolumeTo()!=null) s +=  "," + exchangeRate.getLastVolumeTo();
+        if (exchangeRate.getLastTradeId()>0) s +=  "," + exchangeRate.getLastTradeId();
+        if (exchangeRate.getVolume24hour()!=null) s +=  "," + exchangeRate.getVolume24hour();
+        if (exchangeRate.getVolume24hourTo()!=null) s +=  "," + exchangeRate.getVolume24hourTo();
+        if (exchangeRate.getOpen24hour()!=null) s +=  "," + exchangeRate.getOpen24hour();
+        if (exchangeRate.getHigh24hour()!=null) s +=  "," + exchangeRate.getHigh24hour();
+        if (exchangeRate.getLow24hour()!=null) s +=  "," + exchangeRate.getLow24hour();
+        if (exchangeRate.getLastMarket()!=null) s +=  ",''" + exchangeRate.getLastMarket() + "'";
+        if (exchangeRate.getChange24hour()!=null) s +=  "," + exchangeRate.getChange24hour();
+        if (exchangeRate.getChangePct24hour()!=null) s +=  "," + exchangeRate.getChangePct24hour();
+        if (exchangeRate.getSupply()!=null) s +=  "," + exchangeRate.getSupply();
+        if (exchangeRate.getMarketCap()!=null) s +=  "," + exchangeRate.getMarketCap();
+        s += ");";
+        System.out.println("SQL to update details: " + s);
+        return s;
+    }
+
     /**
      * RateHistory
      */
     private class RateHistory {
     
         private Date date;
-        private Map<String, Double> rates;
+        private List<ExchangeRate> rates;
 
-        public RateHistory (Date date, Map<String, Double> rates) {
+        public RateHistory (Date date, List<ExchangeRate> rates) {
             this.date = date;
             this.rates = rates;
         }
@@ -80,18 +143,14 @@ public class RateHistoryDAO {
             return this.date;
         }
 
-        public Map<String, Double> getRates(){
+        public List<ExchangeRate> getRates(){
             return this.rates;
-        }
-
-        public void setRate(String currency, double rate){
-            this.rates.put(currency, rate);
         }
 
         public String toString(){
             StringBuilder sb = new StringBuilder("{DATE: " + this.date.toString());
-            for(String k : this.rates.keySet()){
-                sb.append(", " + k.toUpperCase() + ": " + this.rates.get(k));
+            for(ExchangeRate e : this.rates) {
+                sb.append(", " + e.getCurrency() + ": " + e.getPrice());
             } 
             sb.append("}");
             return sb.toString();

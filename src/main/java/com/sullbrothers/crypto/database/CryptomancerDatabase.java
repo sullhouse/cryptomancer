@@ -32,9 +32,15 @@ public class CryptomancerDatabase{
         return stmt.executeQuery(query);
     }
 
-    protected static void runUpdate(String query) throws SQLException{
+    protected static int runUpdate(String query) throws SQLException{
         Statement stmt = getConnection().internalConnection.createStatement();
-        stmt.executeUpdate(query);
+        stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+        ResultSet generatedKeys = stmt.getGeneratedKeys();
+        if (generatedKeys.next()) {
+            return generatedKeys.getInt(1);
+        } else {
+            throw new SQLException("SQL update failed.");
+        }
     }
 
     private static void initialize(){

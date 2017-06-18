@@ -35,10 +35,11 @@ public class ExchangeRatesTest
     public void testApp()
     {
         ExchangeRates exchangeRates = new ExchangeRates("BTC");
-        assertTrue("Exchange rates map should include BTC greater than zero", exchangeRates.getExchageRates().get("BTC") > 0);
-        assertTrue("Exchange rates map should include ETH greater than zero", exchangeRates.getExchageRates().get("ETH") > 0);
-        assertTrue("Exchange rates map should include LTC greater than zero", exchangeRates.getExchageRates().get("LTC") > 0);
-        assertTrue("Exchange rates map should include USD greater than zero", exchangeRates.getExchageRates().get("USD") > 0);
+        exchangeRates.getExchangeRatesFromCoinbase();
+        assertTrue("Exchange rates map should include BTC greater than zero", exchangeRates.getExchangeRateByCurrency("BTC").getPrice() > 0);
+        assertTrue("Exchange rates map should include ETH greater than zero", exchangeRates.getExchangeRateByCurrency("ETH").getPrice() > 0);
+        assertTrue("Exchange rates map should include LTC greater than zero", exchangeRates.getExchangeRateByCurrency("LTC").getPrice() > 0);
+        assertTrue("Exchange rates map should include USD greater than zero", exchangeRates.getExchangeRateByCurrency("USD").getPrice() > 0);
 
         assertNotNull("Exchange rates timestamp should exist", exchangeRates.getTimestamp());
     }
