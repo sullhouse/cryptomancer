@@ -4,14 +4,18 @@ import org.json.JSONObject;
 import java.util.*;
 
 public class ExchangeRates{
-    private Map<String, Double> exchangeRates = new HashMap<String, Double>();
+    private List<ExchangeRate> exchangeRates = new ArrayList<ExchangeRate>();
     private Date timestamp;
+    private String currency;
 
     public ExchangeRates(String currency) {
+        this.currency = currency;
+    }
+    public void getExchangeRatesFromCoinbase() {
         CoinbaseConnection coinbaseConnection = new CoinbaseConnection();
         timestamp = new Date();
         System.out.println(timestamp);
-        JSONObject exchangeRatesJson = coinbaseConnection.getExchangeRates(currency);
+        JSONObject exchangeRatesJson = coinbaseConnection.getExchangeRates(this.currency);
 
         JSONObject exchangeRatesJsonData = exchangeRatesJson.getJSONObject("data");
         JSONObject exchangeRatesJsonDataRates = exchangeRatesJsonData.getJSONObject("rates");
@@ -21,7 +25,10 @@ public class ExchangeRates{
         while (keys.hasNext()) {
             String key = keys.next();
             try {
-                this.exchangeRates.put(key, exchangeRatesJsonDataRates.getDouble(key));
+                ExchangeRate exchangeRate = new ExchangeRate(key);
+                exchangeRate.setFromCurrency(this.currency);
+                exchangeRate.setPrice(exchangeRatesJsonDataRates.getDouble(key));
+                this.exchangeRates.add(exchangeRate);
                 System.out.println(key + " = " + exchangeRatesJsonDataRates.getDouble(key));
             } catch(Exception e) {
                 
@@ -29,11 +36,18 @@ public class ExchangeRates{
         }
     }
 
-    public Map<String, Double> getExchageRates() {
+    public List<ExchangeRate> getExchangeRates() {
         return exchangeRates;
     }  
 
     public Date getTimestamp() {
         return timestamp;
+    }
+
+    public ExchangeRate getExchangeRateByCurrency(String currency) {
+        for (ExchangeRate e : exchangeRates) {
+            if (e.getCurrency().equalsIgnoreCase(currency)) return e;
+        }
+        return null;
     }
 }

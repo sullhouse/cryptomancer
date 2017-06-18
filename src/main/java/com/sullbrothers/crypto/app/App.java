@@ -1,6 +1,7 @@
 package com.sullbrothers.crypto.app;
 
 import java.sql.SQLException;
+import java.util.Date;
 
 import com.sullbrothers.crypto.coinbase.*;
 import com.sullbrothers.crypto.database.*;
@@ -17,6 +18,8 @@ public class App
                     try {
                         getLatestExchangeRates("BTC");
                     } catch (Exception e) {
+                        e.printStackTrace();
+                        System.out.println("Ran into an issue getting latest exchange rates!");
                         //TODO: handle exception
                     }
                     break;
@@ -29,6 +32,7 @@ public class App
 
     private static void getLatestExchangeRates(String currency) throws SQLException {
         ExchangeRates exchangeRates = new ExchangeRates(currency);
-        new RateHistoryDAO(exchangeRates.getTimestamp(), exchangeRates.getExchageRates());
+        exchangeRates.getExchangeRatesFromCoinbase();
+        new RateHistoryDAO(new Date(), exchangeRates);
     }
 }

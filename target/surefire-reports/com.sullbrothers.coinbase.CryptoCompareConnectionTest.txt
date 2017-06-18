@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: com.sullbrothers.app.AppTest
+Test set: com.sullbrothers.coinbase.CryptoCompareConnectionTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.017 sec
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.814 sec
