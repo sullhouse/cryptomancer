@@ -125,6 +125,9 @@ public class RateHistoryDAO {
         System.out.println("SQL to update details: " + s);
         return s;
     }
+    public static RateHistory getLatest(){
+        return null;
+    }
 
     /**
      * RateHistory
