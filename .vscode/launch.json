@@ -6,13 +6,15 @@
             "type": "java",
             "request": "launch",
             "stopOnEntry": true,
-            "cwd": "${fileDirname}", // ${fileDirname}: the current opened file's dirname
-            "startupClass": "com.sullbrothers.crypto.app.${fileBasename}", // ${fileBasename}: the current opened file's basename
+            "cwd": "${fileDirname}", 
+            "startupClass": "com.sullbrothers.crypto.app.${fileBasename}",
             "options": [
                 "-classpath",
-                "${workspaceRoot}/target/classes" // ${fileDirname}: the current opened file's dirname
+                "${workspaceRoot}/target/classes",
+                "com.sullbrothers.crypto.app.App",
+                "getRates"
             ],
-            "jdkPath": "${env:JAVA_HOME}/bin", // ${env.JAVA_HOME}: reference environment variables
+            "jdkPath": "${env:JAVA_HOME}/bin"
         },
         {
             "name": "Java Console App",
@@ -27,6 +29,9 @@
             ],
             "externalConsole": true,
             "jdkPath": "${env:JAVA_HOME}/bin",
+            "args": [
+                "getRates"
+            ]
         }
     ]
 }
