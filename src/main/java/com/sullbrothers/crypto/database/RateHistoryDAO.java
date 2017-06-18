@@ -3,7 +3,6 @@ package com.sullbrothers.crypto.database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.Map;
 
 import com.sullbrothers.crypto.coinbase.ExchangeRate;
 import com.sullbrothers.crypto.coinbase.ExchangeRates;
@@ -37,7 +36,7 @@ public class RateHistoryDAO {
                 rhRate.setPrice(rs.getDouble(i));
                 rhRates.add(rhRate);
             }
-            rateHistory.add(new RateHistory(rhDate, rhRates));
+            rateHistory.add(new RateHistory(rhDate, new ExchangeRates("", endDate, rhRates)));
         }
     }
 
@@ -58,7 +57,7 @@ public class RateHistoryDAO {
         CryptomancerDatabase.runUpdate(getPutDetailStatement(rateHistoryId, rates.getExchangeRateByCurrency("LTC")));
         CryptomancerDatabase.runUpdate(getPutDetailStatement(rateHistoryId, rates.getExchangeRateByCurrency("USD")));
 
-        RateHistory rh = new RateHistory(timestamp, rates.getExchangeRates());
+        RateHistory rh = new RateHistory(timestamp, rates);
 
         rateHistory = new ArrayList<RateHistory>();
         rateHistory.add(rh);
@@ -125,6 +124,10 @@ public class RateHistoryDAO {
         System.out.println("SQL to update details: " + s);
         return s;
     }
+
+    public List<RateHistory> getAllHistoricalRates(){
+        return this.rateHistory;
+    }
     public static RateHistory getLatest(){
         return null;
     }
@@ -132,12 +135,12 @@ public class RateHistoryDAO {
     /**
      * RateHistory
      */
-    private class RateHistory {
+    public class RateHistory {
     
         private Date date;
-        private List<ExchangeRate> rates;
+        private ExchangeRates rates;
 
-        public RateHistory (Date date, List<ExchangeRate> rates) {
+        public RateHistory (Date date, ExchangeRates rates) {
             this.date = date;
             this.rates = rates;
         }
@@ -146,13 +149,13 @@ public class RateHistoryDAO {
             return this.date;
         }
 
-        public List<ExchangeRate> getRates(){
+        public ExchangeRates getRates(){
             return this.rates;
         }
 
         public String toString(){
             StringBuilder sb = new StringBuilder("{DATE: " + this.date.toString());
-            for(ExchangeRate e : this.rates) {
+            for(ExchangeRate e : this.rates.getExchangeRates()) {
                 sb.append(", " + e.getCurrency() + ": " + e.getPrice());
             } 
             sb.append("}");

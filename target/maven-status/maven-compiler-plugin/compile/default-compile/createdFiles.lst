@@ -1,11 +1,13 @@
+com\sullbrothers\crypto\coinbase\ExchangeRate.class
+com\sullbrothers\crypto\database\RateHistoryDAO.class
+com\sullbrothers\crypto\app\App.class
 com\sullbrothers\crypto\coinbase\CoinbaseConnection.class
 com\sullbrothers\crypto\coinbase\ExchangeRates.class
 com\sullbrothers\crypto\database\RateHistoryDAO$RateHistory.class
 com\sullbrothers\crypto\mancer\DecisionInterface.class
+com\sullbrothers\crypto\coinbase\CryptoCompareConnection.class
 com\sullbrothers\crypto\mancer\MancerState.class
 com\sullbrothers\crypto\sim\SimulationEngine.class
-com\sullbrothers\crypto\database\RateHistoryDAO.class
 com\sullbrothers\crypto\mancer\MancerAction.class
 com\sullbrothers\crypto\database\CryptomancerDatabase.class
 com\sullbrothers\crypto\database\CurrencyValuesDAO.class
-com\sullbrothers\crypto\app\App.class

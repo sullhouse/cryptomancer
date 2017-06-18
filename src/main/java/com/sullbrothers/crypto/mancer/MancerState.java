@@ -27,7 +27,7 @@ public class MancerState {
     public double getTotalValue(){
         double toReturn = 0;
         for(String s : this.currencyValues.getCurrencies()){
-            toReturn += this.currencyValues.getValueForCurrency(s)*this.currentRates.getRates().get(s);
+            toReturn += this.currencyValues.getValueForCurrency(s)*this.currentRates.getRates().getExchangeRateByCurrency(s).getPrice();
         }
         return toReturn;
     }

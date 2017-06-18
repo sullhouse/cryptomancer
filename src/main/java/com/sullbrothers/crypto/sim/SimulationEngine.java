@@ -51,8 +51,8 @@ public class SimulationEngine {
 
     public static boolean purchase(MancerAction action){
         CurrencyValuesDAO cvs = getInstance().state.currencyValues;
-        double buyRate = getInstance().state.currentRates.getRates().get(action.currencyToBuy);
-        double payRate = getInstance().state.currentRates.getRates().get(action.currencyToPay);
+        double buyRate = getInstance().state.currentRates.getRates().getExchangeRateByCurrency(action.currencyToBuy).getPrice();
+        double payRate = getInstance().state.currentRates.getRates().getExchangeRateByCurrency(action.currencyToPay).getPrice();
 
         double buyValue = cvs.getValueForCurrency(action.currencyToBuy);
         double payValue = cvs.getValueForCurrency(action.currencyToPay);
