@@ -105,9 +105,9 @@ public class RateHistoryDAO {
         s += "'" + exchangeRate.getFromCurrency() + "',";
         s += exchangeRate.getPrice();
         if (exchangeRate.getType()>0) s +=  "," + exchangeRate.getType();
-        if (exchangeRate.getMarket()!=null) s +=  ",''" + exchangeRate.getMarket() + "'";
+        if (exchangeRate.getMarket()!=null) s +=  ",'" + exchangeRate.getMarket() + "'";
         if (exchangeRate.getFlags()>0) s +=  "," + exchangeRate.getFlags();
-        if (exchangeRate.getLastUpdate()!=null) s +=  ",''" + exchangeRate.getLastUpdate() + "'";
+        if (exchangeRate.getLastUpdate()!=null) s +=  ",'" + df.format(exchangeRate.getLastUpdate()) + "'";
         if (exchangeRate.getLastVolume()!=null) s +=  "," + exchangeRate.getLastVolume();
         if (exchangeRate.getLastVolumeTo()!=null) s +=  "," + exchangeRate.getLastVolumeTo();
         if (exchangeRate.getLastTradeId()>0) s +=  "," + exchangeRate.getLastTradeId();
@@ -116,7 +116,7 @@ public class RateHistoryDAO {
         if (exchangeRate.getOpen24hour()!=null) s +=  "," + exchangeRate.getOpen24hour();
         if (exchangeRate.getHigh24hour()!=null) s +=  "," + exchangeRate.getHigh24hour();
         if (exchangeRate.getLow24hour()!=null) s +=  "," + exchangeRate.getLow24hour();
-        if (exchangeRate.getLastMarket()!=null) s +=  ",''" + exchangeRate.getLastMarket() + "'";
+        if (exchangeRate.getLastMarket()!=null) s +=  ",'" + exchangeRate.getLastMarket() + "'";
         if (exchangeRate.getChange24hour()!=null) s +=  "," + exchangeRate.getChange24hour();
         if (exchangeRate.getChangePct24hour()!=null) s +=  "," + exchangeRate.getChangePct24hour();
         if (exchangeRate.getSupply()!=null) s +=  "," + exchangeRate.getSupply();

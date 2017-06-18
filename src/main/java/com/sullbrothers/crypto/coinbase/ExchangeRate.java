@@ -1,6 +1,6 @@
 package com.sullbrothers.crypto.coinbase;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class ExchangeRate {
     private String currency;

@@ -16,7 +16,7 @@ public class App
             switch (arg) {
                 case "getrates":
                     try {
-                        getLatestExchangeRates("BTC");
+                        getLatestExchangeRates("USD");
                     } catch (Exception e) {
                         e.printStackTrace();
                         System.out.println("Ran into an issue getting latest exchange rates!");
@@ -32,7 +32,7 @@ public class App
 
     private static void getLatestExchangeRates(String currency) throws SQLException {
         ExchangeRates exchangeRates = new ExchangeRates(currency);
-        exchangeRates.getExchangeRatesFromCoinbase();
+        exchangeRates.getExchangeRatesFromCryptoCompare("BTC,ETH,LTC,USD");
         new RateHistoryDAO(new Date(), exchangeRates);
     }
 }
