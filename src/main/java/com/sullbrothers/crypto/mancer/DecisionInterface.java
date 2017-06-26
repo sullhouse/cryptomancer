@@ -21,6 +21,12 @@ public class DecisionInterface {
 
     /** This is the number of rate histories in between a data point and it's future "success" point */
     public static final int POSITIONS_TO_FUTURE = 24*60;
+    public static final int[] HISTORICAL_INDICES = new int[]{
+        -12*60,
+        -24*60,
+        -36*60,
+        -48*60
+    };
 
     public DecisionInterface () {
         
@@ -107,6 +113,12 @@ public class DecisionInterface {
             Attribute a = new Attribute(er.getCurrency() + "_AMOUNT");
             dataVector.add(a);
 
+            // Add attributes for historical data
+            // For each of the historical periods we will add as many attributes as were added above
+            for(int i = 0; i < HISTORICAL_INDICES.length; i++){
+                dataVector.add(new Attribute(er.getCurrency() + "_HIST_RATE_" + i));
+            }
+
             System.out.printf("currency:%s, fromCurrency:%s\n", er.getCurrency(), er.getFromCurrency());
             currencies.add(er.getCurrency());
         }
@@ -137,20 +149,27 @@ public class DecisionInterface {
 
 
         // Now populate the dataset
-        for(RateHistory rh : state.historicalRates){
+        for(int rhPos = 0; rhPos < state.historicalRates.size(); rhPos++){
+            RateHistory rh = state.historicalRates.get(rhPos);
             Instance toAdd = new SparseInstance(dataVector.size());
             i = 0;
             for(String curr : currencies){
                 // i is currency rate
-                toAdd.setValue(dataVector.get(i), rh.getRates().getExchangeRateByCurrency(curr).getPrice());
+                toAdd.setValue(dataVector.get(i++), rh.getRates().getExchangeRateByCurrency(curr).getPrice());
 
                 // i + 1 is currency amount                
                 // we're not actually storing this at the moment so I'll have to spoof it for now
-                toAdd.setValue(dataVector.get(i+1), getAmountForCurrency(curr));
-                i = i + 2;
+                toAdd.setValue(dataVector.get(i++), getAmountForCurrency(curr));
+
+                for(int n = 0; n < HISTORICAL_INDICES.length; n++){
+                    if(rhPos + HISTORICAL_INDICES[n] >= 0){
+                        toAdd.setValue(dataVector.get(i+n), state.historicalRates.get(rhPos+HISTORICAL_INDICES[n]).getRates().getExchangeRateByCurrency(curr).getPrice());
+                    }
+                }
+                i = i + HISTORICAL_INDICES.length;
             }
             // Using sparse instance to ignore classification for now
-            String action = predictResult(state, state.historicalRates.indexOf(rh));
+            String action = predictResult(state, rhPos);
             if(action != null){
                 System.out.println("Setting class attribute to " + action + " for " + rh.toString());
                 toAdd.setValue(dataVector.get(dataVector.size()-1), action);
