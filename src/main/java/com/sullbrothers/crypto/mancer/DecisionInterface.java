@@ -33,7 +33,7 @@ public class DecisionInterface {
     /** This is the number of rate histories in between a data point and it's future "success" point */
     public static final int POSITIONS_TO_FUTURE = 24*60;
     // attempt to check future value for making predictions every 4 hours
-    public static final int POSITIONS_TO_PREDICTION = 18*60;
+    public static final int POSITIONS_TO_PREDICTION = 12*60;
     public static final int[] HISTORICAL_INDICES = new int[]{
         -12*60,
         -24*60,
@@ -142,9 +142,14 @@ public class DecisionInterface {
             // we're not actually storing this at the moment so I'll have to spoof it for now
             toReturn.setValue(dataVector.get(i++), getAmountForCurrency(curr));
 
+            // add historical rates
             for(int n = 0; n < HISTORICAL_INDICES.length; n++){
                 if(rhPos + HISTORICAL_INDICES[n] >= 0){
-                    toReturn.setValue(dataVector.get(i+n), 1/(historicalRates.get(rhPos+HISTORICAL_INDICES[n]).getRates().getExchangeRateByCurrency(curr).getPrice()));
+                    // toReturn.setValue(dataVector.get(i+n), 1/(historicalRates.get(rhPos+HISTORICAL_INDICES[n]).getRates().getExchangeRateByCurrency(curr).getPrice()));
+                    // what if instead of the rate at that time we did a diff with current rate?
+                    double tempCurrRate = 1/(rh.getRates().getExchangeRateByCurrency(curr).getPrice());
+                    double tempHistRate = 1/(historicalRates.get(rhPos+HISTORICAL_INDICES[n]).getRates().getExchangeRateByCurrency(curr).getPrice());
+                    toReturn.setValue(dataVector.get(i+n), (tempHistRate - tempCurrRate)/tempCurrRate);
                 }
             }
             i = i + HISTORICAL_INDICES.length;

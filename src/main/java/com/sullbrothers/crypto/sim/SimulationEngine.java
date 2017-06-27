@@ -43,6 +43,7 @@ public class SimulationEngine {
         getInstance().state.currencyValues.setValueForCurrency("ETH", 110);
         getInstance().state.currencyValues.setValueForCurrency("BTC", 51.5);
         getInstance().state.currencyValues.setValueForCurrency("LTC", 105);
+        getInstance().state.setCurrentRatePosition(getInstance().simPosition);
         double initialValue = getInstance().state.getTotalValue();
         toReturn.append("Initial state: " + getInstance().state + "\n");
 
@@ -51,13 +52,22 @@ public class SimulationEngine {
             if(getInstance().simPosition%ITERATION_DELAY != 0){
                 getInstance().simPosition++;
                 continue;
-            }
+            }            
+            getInstance().state.setCurrentRatePosition(getInstance().simPosition);
             MancerAction toPerform = DecisionInterface.shouldPerform(getInstance().state, getInstance().simPosition++);
             toReturn.append("Performing action " + toPerform == null ? "NO ACTION" : toPerform);
             toReturn.append(", SUCCESS?: " + purchase(toPerform) + "\n");
         }
         toReturn.append("Final state: " + getInstance().state + "\n");
-        toReturn.append("Final difference: " + (getInstance().state.getTotalValue() - initialValue));
+        double finalValue = getInstance().state.getTotalValue();
+        toReturn.append("Final difference: " + (finalValue - initialValue) + "\n");
+        getInstance().state.currencyValues.setValueForCurrency("USD", 0);
+        getInstance().state.currencyValues.setValueForCurrency("ETH", 110);
+        getInstance().state.currencyValues.setValueForCurrency("BTC", 51.5);
+        getInstance().state.currencyValues.setValueForCurrency("LTC", 105);
+        double unmodifiedFinalValue = getInstance().state.getTotalValue();
+        toReturn.append("Difference between traded final and naive final: " + (finalValue - unmodifiedFinalValue));
+
         return toReturn.toString();
     }
 

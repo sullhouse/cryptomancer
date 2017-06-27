@@ -32,6 +32,12 @@ public class MancerState {
         return toReturn;
     }
 
+    public void setCurrentRatePosition(int i){
+        if(i >= 0 && i < historicalRates.size()){
+            this.currentRates = historicalRates.get(i);
+        }
+    }
+
     public String toString(){
         return "\"STATE\": {" + currencyValues + ", \"CURRENT_RATES\": " + currentRates + "}";
     }
