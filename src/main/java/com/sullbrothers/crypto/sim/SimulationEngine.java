@@ -16,8 +16,8 @@ import com.sullbrothers.crypto.mancer.MancerState;
  */
 public class SimulationEngine {
 
-    private final double HISTORICAL_RATIO = .75;
-    private static final int ITERATION_DELAY = 30;
+    public static final double HISTORICAL_RATIO = .9;
+    private static final int ITERATION_DELAY = 5;
 
     private MancerState state;
     private int simPosition;
@@ -66,7 +66,8 @@ public class SimulationEngine {
         getInstance().state.currencyValues.setValueForCurrency("BTC", 51.5);
         getInstance().state.currencyValues.setValueForCurrency("LTC", 105);
         double unmodifiedFinalValue = getInstance().state.getTotalValue();
-        toReturn.append("Difference between traded final and naive final: " + (finalValue - unmodifiedFinalValue));
+        toReturn.append("Difference between traded final and naive final: " + (finalValue - unmodifiedFinalValue) + "\n");
+        toReturn.append("ratio of traded final to naive final: " + (finalValue/unmodifiedFinalValue));
 
         return toReturn.toString();
     }

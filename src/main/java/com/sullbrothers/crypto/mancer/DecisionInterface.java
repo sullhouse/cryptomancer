@@ -31,9 +31,9 @@ public class DecisionInterface {
     private static String[] CLASSIFICATIONS;
 
     /** This is the number of rate histories in between a data point and it's future "success" point */
-    public static final int POSITIONS_TO_FUTURE = 24*60;
+    public static final int POSITIONS_TO_FUTURE = 1*60;
     // attempt to check future value for making predictions every 4 hours
-    public static final int POSITIONS_TO_PREDICTION = 12*60;
+    public static final int POSITIONS_TO_PREDICTION = 24*60;
     public static final int[] HISTORICAL_INDICES = new int[]{
         -12*60,
         -24*60,
@@ -231,7 +231,7 @@ public class DecisionInterface {
         return toReturn;
     }
 
-    public static Instances generateDataSet(MancerState state, String relationshipName){
+    public static Instances generateDataSet(MancerState state, String relationshipName, double percentToKeep){
         ArrayList<Attribute> dataVector = new ArrayList<Attribute>();
 
         ArrayList<String> currencies = new ArrayList<String>();
@@ -286,7 +286,7 @@ public class DecisionInterface {
 
 
         // Now populate the dataset
-        for(int rhPos = 0; rhPos < state.historicalRates.size(); rhPos++){
+        for(int rhPos = 0; rhPos < state.historicalRates.size()*percentToKeep; rhPos++){
             Instance toAdd = getInstanceFromRateHistory(state.historicalRates, dataVector, currencies, rhPos);
 
             // Using sparse instance to ignore classification for now
