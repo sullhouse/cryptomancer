@@ -9,13 +9,14 @@
     "tasks": [
         {
             "taskName": "verify",
-            "args": ["-B", "verify"],
+            "args": ["clean","install","-B", "verify"],
             "isBuildCommand": true
         },
         {
             "taskName": "test",
-            "args": ["-B", "test"],
+            "args": ["clean","install","-B", "test"],
             "isTestCommand": true
         }
-    ]
+    ],
+    "key":"ctrl+shift+b"
 }

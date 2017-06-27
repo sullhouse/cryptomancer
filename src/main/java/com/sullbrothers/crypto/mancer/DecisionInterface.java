@@ -3,11 +3,15 @@ package com.sullbrothers.crypto.mancer;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.OptionalDouble;
 
 import com.sullbrothers.crypto.coinbase.ExchangeRate;
 import com.sullbrothers.crypto.database.RateHistoryDAO.RateHistory;
 
+import weka.classifiers.Classifier;
+import weka.classifiers.trees.J48;
 import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
@@ -19,8 +23,17 @@ import weka.core.converters.ArffSaver;
  */
 public class DecisionInterface {
 
+    // Singleton decision tree
+    private static Classifier CLASSIFIER;
+    private static Instances CLASSIFIER_DATASET;
+    private static List<String> CURRENCIES;
+    private static List<Attribute> DATA_VECTOR;
+    private static String[] CLASSIFICATIONS;
+
     /** This is the number of rate histories in between a data point and it's future "success" point */
     public static final int POSITIONS_TO_FUTURE = 24*60;
+    // attempt to check future value for making predictions every 4 hours
+    public static final int POSITIONS_TO_PREDICTION = 18*60;
     public static final int[] HISTORICAL_INDICES = new int[]{
         -12*60,
         -24*60,
@@ -50,6 +63,12 @@ public class DecisionInterface {
         // (currA + (Brate/Arate) * delta)*Arate' + (currB - delta)*Brate' = new
         // taking the first derivative with respect to delta:
         // ((Brate*Arate')/Arate) - Brate' = dPrice/dt
+        //
+        // Changing my math approach.  new take is:
+        // relative number of new shares = N' = Arate/Brate
+        // relative value of new shares = P' = Brate'/Arate'
+        // number of current shares * current value normalized = 1
+        // factor of change = N'P' - 1
         Map<String, Double> actionValues = new HashMap<String, Double>();
         String[] currencies = state.currencyValues.getCurrencies().toArray(new String[0]);
         for(int i = 0; i < currencies.length; i++){
@@ -59,23 +78,32 @@ public class DecisionInterface {
                 }
                 String buyCurrency = currencies[i];
                 String sellCurrency = currencies[j];
+                String action = buyCurrency + ":" + sellCurrency;
                 if(buyCurrency.equalsIgnoreCase("usd") || sellCurrency.equalsIgnoreCase("usd")){
                     continue;
                 }
-                double currBuyRate = curr.getRates().getExchangeRateByCurrency(buyCurrency).getPrice();
-                double currSellRate = curr.getRates().getExchangeRateByCurrency(sellCurrency).getPrice();
-                double futureBuyRate = future.getRates().getExchangeRateByCurrency(buyCurrency).getPrice();
-                double futureSellRate = future.getRates().getExchangeRateByCurrency(sellCurrency).getPrice();
-                double dValue = (currSellRate*futureBuyRate/currBuyRate) - futureSellRate;
-                String action = buyCurrency + ":" + sellCurrency;
-                actionValues.put(action, dValue);
+                int futurePos = rateHistoryPosition + POSITIONS_TO_FUTURE;
+                ArrayList<Double> currencyFutureAverage = new ArrayList<Double>();
+                while(futurePos < state.historicalRates.size()){
+                    future = state.historicalRates.get(futurePos);
+                    double currBuyRate = 1/(curr.getRates().getExchangeRateByCurrency(buyCurrency).getPrice());
+                    double currSellRate = 1/(curr.getRates().getExchangeRateByCurrency(sellCurrency).getPrice());
+                    double futureBuyRate = 1/(future.getRates().getExchangeRateByCurrency(buyCurrency).getPrice());
+                    double futureSellRate = 1/(future.getRates().getExchangeRateByCurrency(sellCurrency).getPrice());
+                    double dValue = (currSellRate*futureBuyRate)/(currBuyRate*futureSellRate) - 1;
+                    currencyFutureAverage.add(dValue);
+                    futurePos += POSITIONS_TO_FUTURE;
+                }
+                OptionalDouble dValue = currencyFutureAverage.stream().mapToDouble(a -> a).average();
+                actionValues.put(action, dValue.isPresent() ? dValue.getAsDouble() : -1);
             }
         }
 
         // TODO: potentially increase  this to something to reflect the desire
-        // to only trade when we make more than a certain amount
-        double maxDelta = 0;
+        // to only trade when we make more than a certain amount (now set to 10% increase)
+        double maxDelta = 0.05;
         String action = "NONE";
+        System.out.println("Rate " + rateHistoryPosition + " future values list: " + actionValues.toString());
         for(String k : actionValues.keySet()){
             if(actionValues.get(k) > maxDelta){
                 maxDelta=actionValues.get(k);
@@ -86,6 +114,44 @@ public class DecisionInterface {
         return action;
     }
 
+    public static Instance getInstanceFromRateHistory(List<RateHistory> historicalRates, List<Attribute> dataVector, List<String> currencies, int rhPos){
+        if(currencies == null){
+            if(CURRENCIES != null){
+                currencies = CURRENCIES;
+            }else{
+                currencies = new ArrayList<String>();
+                for(ExchangeRate er : historicalRates.get(0).getRates().getExchangeRates()){
+                    currencies.add(er.getCurrency());
+                }
+            }
+        }
+        if(dataVector == null){
+            if(DATA_VECTOR != null){
+                dataVector = DATA_VECTOR;
+            }
+            // else panic?
+        }
+        RateHistory rh = historicalRates.get(rhPos);
+        Instance toReturn = new SparseInstance(dataVector.size());
+        int i = 0;
+        for(String curr : currencies){
+            // i is currency rate
+            toReturn.setValue(dataVector.get(i++), 1/(rh.getRates().getExchangeRateByCurrency(curr).getPrice()));
+
+            // i + 1 is currency amount                
+            // we're not actually storing this at the moment so I'll have to spoof it for now
+            toReturn.setValue(dataVector.get(i++), getAmountForCurrency(curr));
+
+            for(int n = 0; n < HISTORICAL_INDICES.length; n++){
+                if(rhPos + HISTORICAL_INDICES[n] >= 0){
+                    toReturn.setValue(dataVector.get(i+n), 1/(historicalRates.get(rhPos+HISTORICAL_INDICES[n]).getRates().getExchangeRateByCurrency(curr).getPrice()));
+                }
+            }
+            i = i + HISTORICAL_INDICES.length;
+        }
+        return toReturn;
+    }
+
     /**
      * Given a set of historical points, can I bring in data from even further in history to enrich my data for classification?
      * First thought for this is to take data from 24 hours prior (roughly 1480 positions in the past) and add that to the data row
@@ -94,9 +160,70 @@ public class DecisionInterface {
      */
     //TODO: come up with method sig here
 
-    public static MancerAction shouldPerform(MancerState state){
-        // TODO: do something brilliant here
-        return MancerAction.getRandomAction();
+    public static MancerAction shouldPerform(MancerState state, int rhPos){
+        if(CLASSIFIER == null){
+            // TODO: decide how to initialize our classifiers outside of test cases
+            return MancerAction.getRandomAction();
+        }
+        if(CLASSIFIER_DATASET == null){
+            CLASSIFIER_DATASET = new Instances("mancerTest", (ArrayList<Attribute>)DATA_VECTOR, 10);
+            CLASSIFIER_DATASET.setClassIndex(DATA_VECTOR.size()-1);
+        }
+        try{
+            Instance instance = getInstanceFromRateHistory(state.historicalRates, null, null, rhPos);
+            instance.setDataset(CLASSIFIER_DATASET);
+            int pos = new Double(((J48)CLASSIFIER).classifyInstance(instance)).intValue();
+            /** The below block of code gets the full probability distribution for prediction
+            double[] classDistribution = ((J48)CLASSIFIER).distributionForInstance(instance);
+            double maxProb = .05;
+            int pos = -1;
+            for(int i = 0; i < classDistribution.length; i++){
+                if(classDistribution[i] > maxProb){
+                    maxProb = classDistribution[i];
+                    pos = i;
+                }
+            }
+            */
+            if(pos >= 0){
+                System.out.println("Returning Action " + parseClassification(CLASSIFICATIONS[pos]) + " for the following input:");
+                System.out.println("Input: " + state.historicalRates.get(rhPos));
+                System.out.println("Instance: " + instance);
+                System.out.println("Predicted Class: " + CLASSIFICATIONS[pos]);
+                /**
+                StringBuilder sb = new StringBuilder("Classifications: {");
+                for(int i = 0; i < classDistribution.length; i++){
+                    sb.append("\""+CLASSIFICATIONS[i]+"\":" + classDistribution[i] + ", ");
+                }
+                sb.replace(sb.length()-2, sb.length(), "");
+                sb.append("}");
+                System.out.println(sb);
+                */
+                return parseClassification(CLASSIFICATIONS[pos]);
+            }
+            System.out.println("Determined that no actions were within threshold.  Returning null");
+            return null;
+        }catch(Exception e){
+            System.out.println("Caught exception attempting to classify an action");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // This implementation creates a J48 decision tree
+    // TODO: make this a real interface that allows for different classifiers
+    public static Classifier buildAndTrainClassifier(Instances trainingSet){
+        Classifier toReturn = (Classifier)new J48();
+
+        try{
+            toReturn.buildClassifier(trainingSet);
+        }
+        catch(Exception e){
+            System.out.println("ERROR building and training classifier");
+            e.printStackTrace();
+            return null;
+        }
+
+        return toReturn;
     }
 
     public static Instances generateDataSet(MancerState state, String relationshipName){
@@ -122,7 +249,7 @@ public class DecisionInterface {
             System.out.printf("currency:%s, fromCurrency:%s\n", er.getCurrency(), er.getFromCurrency());
             currencies.add(er.getCurrency());
         }
-
+        CURRENCIES = currencies;
         // Add the classification attribute
         ArrayList<String> classifications = new ArrayList<String>();
         System.out.println("Adding possible classification \"NONE\"");
@@ -142,7 +269,12 @@ public class DecisionInterface {
             i++;
         }
 
+        CLASSIFICATIONS = classifications.toArray(new String[0]);
+
         dataVector.add(new Attribute("CLASSIFICATION", classifications));
+        // TODO: determine weights of individual attributes.  For now all are 1
+        dataVector.forEach(a -> a.setWeight(1.0));
+        DATA_VECTOR = dataVector;
 
         Instances data = new Instances(relationshipName, dataVector, 10);
         data.setClassIndex(dataVector.size()-1);
@@ -150,25 +282,10 @@ public class DecisionInterface {
 
         // Now populate the dataset
         for(int rhPos = 0; rhPos < state.historicalRates.size(); rhPos++){
-            RateHistory rh = state.historicalRates.get(rhPos);
-            Instance toAdd = new SparseInstance(dataVector.size());
-            i = 0;
-            for(String curr : currencies){
-                // i is currency rate
-                toAdd.setValue(dataVector.get(i++), rh.getRates().getExchangeRateByCurrency(curr).getPrice());
+            Instance toAdd = getInstanceFromRateHistory(state.historicalRates, dataVector, currencies, rhPos);
 
-                // i + 1 is currency amount                
-                // we're not actually storing this at the moment so I'll have to spoof it for now
-                toAdd.setValue(dataVector.get(i++), getAmountForCurrency(curr));
-
-                for(int n = 0; n < HISTORICAL_INDICES.length; n++){
-                    if(rhPos + HISTORICAL_INDICES[n] >= 0){
-                        toAdd.setValue(dataVector.get(i+n), state.historicalRates.get(rhPos+HISTORICAL_INDICES[n]).getRates().getExchangeRateByCurrency(curr).getPrice());
-                    }
-                }
-                i = i + HISTORICAL_INDICES.length;
-            }
             // Using sparse instance to ignore classification for now
+            RateHistory rh = state.historicalRates.get(rhPos);
             String action = predictResult(state, rhPos);
             if(action != null){
                 System.out.println("Setting class attribute to " + action + " for " + rh.toString());
@@ -222,6 +339,10 @@ public class DecisionInterface {
             return null;
         }
         String[] currencies = classification.split(":");
-        return new MancerAction(currencies[0], currencies[1], 0);
+        return new MancerAction(currencies[0], currencies[1], 1);
+    }
+
+    public static void setClassifier(Classifier c){
+        CLASSIFIER = c;
     }
 }

@@ -17,6 +17,7 @@ import com.sullbrothers.crypto.mancer.MancerState;
 public class SimulationEngine {
 
     private final double HISTORICAL_RATIO = .75;
+    private static final int ITERATION_DELAY = 30;
 
     private MancerState state;
     private int simPosition;
@@ -36,12 +37,23 @@ public class SimulationEngine {
 
     public static String runSimulation(){
         StringBuilder toReturn = new StringBuilder();
+
+        // Starting with some seed money for test purposes
+        getInstance().state.currencyValues.setValueForCurrency("USD", 0);
+        getInstance().state.currencyValues.setValueForCurrency("ETH", 110);
+        getInstance().state.currencyValues.setValueForCurrency("BTC", 51.5);
+        getInstance().state.currencyValues.setValueForCurrency("LTC", 105);
         double initialValue = getInstance().state.getTotalValue();
         toReturn.append("Initial state: " + getInstance().state + "\n");
 
-        while(getInstance().simPosition++ < getInstance().state.historicalRates.size()){
-            MancerAction toPerform = DecisionInterface.shouldPerform(getInstance().state);
-            toReturn.append("Performing action " + toPerform);
+        while(getInstance().simPosition < getInstance().state.historicalRates.size()){
+            // What happens if we only simulate every N minutes?
+            if(getInstance().simPosition%ITERATION_DELAY != 0){
+                getInstance().simPosition++;
+                continue;
+            }
+            MancerAction toPerform = DecisionInterface.shouldPerform(getInstance().state, getInstance().simPosition++);
+            toReturn.append("Performing action " + toPerform == null ? "NO ACTION" : toPerform);
             toReturn.append(", SUCCESS?: " + purchase(toPerform) + "\n");
         }
         toReturn.append("Final state: " + getInstance().state + "\n");
@@ -50,9 +62,12 @@ public class SimulationEngine {
     }
 
     public static boolean purchase(MancerAction action){
+        if(action == null){
+            return true;
+        }
         CurrencyValuesDAO cvs = getInstance().state.currencyValues;
-        double buyRate = getInstance().state.currentRates.getRates().getExchangeRateByCurrency(action.currencyToBuy).getPrice();
-        double payRate = getInstance().state.currentRates.getRates().getExchangeRateByCurrency(action.currencyToPay).getPrice();
+        double buyRate = 1/(getInstance().state.currentRates.getRates().getExchangeRateByCurrency(action.currencyToBuy).getPrice());
+        double payRate = 1/(getInstance().state.currentRates.getRates().getExchangeRateByCurrency(action.currencyToPay).getPrice());
 
         double buyValue = cvs.getValueForCurrency(action.currencyToBuy);
         double payValue = cvs.getValueForCurrency(action.currencyToPay);

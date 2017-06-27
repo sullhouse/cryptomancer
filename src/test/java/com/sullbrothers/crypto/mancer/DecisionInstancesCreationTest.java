@@ -46,6 +46,7 @@ public class DecisionInstancesCreationTest
             List<RateHistoryDAO.RateHistory> rh = new RateHistoryDAO(Date.from(Instant.EPOCH), new Date()).getAllHistoricalRates();
             MancerState state = new MancerState(new CurrencyValuesDAO(), rh.get(0), rh);
             String path = DecisionInterface.saveInstancesToFile(DecisionInterface.generateDataSet(state, "mancerTest"), "mancerTest.arff");
+            DecisionInterface.setClassifier(DecisionInterface.buildAndTrainClassifier(DecisionInterface.generateDataSet(state, "mancerTest")));
             assertTrue(path != null && !path.equalsIgnoreCase("failure") && new File(path).isFile());
         }
         catch(SQLException e){

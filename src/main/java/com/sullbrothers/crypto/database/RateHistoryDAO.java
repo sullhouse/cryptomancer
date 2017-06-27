@@ -156,7 +156,7 @@ public class RateHistoryDAO {
         public String toString(){
             StringBuilder sb = new StringBuilder("{DATE: " + this.date.toString());
             for(ExchangeRate e : this.rates.getExchangeRates()) {
-                sb.append(", " + e.getCurrency() + ": " + e.getPrice());
+                sb.append(", " + e.getCurrency() + ": " + 1/e.getPrice());
             } 
             sb.append("}");
             return sb.toString();
