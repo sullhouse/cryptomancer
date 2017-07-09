@@ -1,6 +1,6 @@
-package com.sullbrothers.coinbase;
+package com.sullbrothers.exchangerates;
 
-import com.sullbrothers.crypto.coinbase.CryptoCompareConnection;
+import com.sullbrothers.crypto.exchangerates.CryptoCompareConnection;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

@@ -7,6 +7,11 @@
 # BlueJ files
 *.ctxt
 
+# Excel files
+*.xlsx
+*.xlsm
+*.xls
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 

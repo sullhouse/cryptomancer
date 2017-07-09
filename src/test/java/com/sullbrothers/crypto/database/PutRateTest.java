@@ -4,7 +4,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import com.sullbrothers.crypto.coinbase.ExchangeRates;
+import com.sullbrothers.crypto.exchangerates.ExchangeRates;
 
 /**
  * Unit test for simple App.

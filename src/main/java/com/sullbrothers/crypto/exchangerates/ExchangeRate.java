@@ -1,4 +1,4 @@
-package com.sullbrothers.crypto.coinbase;
+package com.sullbrothers.crypto.exchangerates;
 
 import java.util.Date;
 

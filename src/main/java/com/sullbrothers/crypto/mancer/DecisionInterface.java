@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.OptionalDouble;
 
-import com.sullbrothers.crypto.coinbase.ExchangeRate;
+import com.sullbrothers.crypto.exchangerates.ExchangeRate;
 import com.sullbrothers.crypto.database.RateHistoryDAO.RateHistory;
 
 import weka.classifiers.Classifier;

@@ -1,6 +1,6 @@
-package com.sullbrothers.coinbase;
+package com.sullbrothers.exchangerates;
 
-import com.sullbrothers.crypto.coinbase.CoinbaseConnection;
+import com.sullbrothers.crypto.exchangerates.ShapeShiftConnection;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Unit test for simple App.
  */
-public class CoinbaseConnectionTest 
+public class ShapeShiftConnectionTest 
     extends TestCase
 {
     /**
@@ -17,7 +17,7 @@ public class CoinbaseConnectionTest
      *
      * @param testName name of the test case
      */
-    public CoinbaseConnectionTest( String testName )
+    public ShapeShiftConnectionTest( String testName )
     {
         super( testName );
     }
@@ -27,7 +27,7 @@ public class CoinbaseConnectionTest
      */
     public static Test suite()
     {
-        return new TestSuite( CoinbaseConnectionTest.class );
+        return new TestSuite( ShapeShiftConnectionTest.class );
     }
 
     /**
@@ -35,8 +35,8 @@ public class CoinbaseConnectionTest
      */
     public void testApp()
     {
-        CoinbaseConnection coinbaseConnection = new CoinbaseConnection();
-        assertNotNull("Coinbase Connection should return exchange rates", coinbaseConnection.getExchangeRates("BTC"));
+        ShapeShiftConnection shapeShiftConnection = new ShapeShiftConnection();
+        assertNotNull("ShapeShift Connection should return exchange rates", shapeShiftConnection.getExchangeRates("BTC", "ETH,LTC"));
     }
 
 }
