@@ -42,14 +42,5 @@ public class ExchangeRatesTest
         assertTrue("Exchange rates map should include USD greater than zero", exchangeRates.getExchangeRateByCurrency("USD").getPrice() > 0);
 
         assertNotNull("Exchange rates timestamp should exist", exchangeRates.getTimestamp());
-
-        ExchangeRates exchangeRates2 = new ExchangeRates("BTC");
-        exchangeRates2.getExchangeRatesFromCryptoCompare("BTC,ETH,LTC,USD");
-        assertTrue("Exchange rates map should include BTC greater than zero", exchangeRates2.getExchangeRateByCurrency("BTC").getPrice() > 0);
-        assertTrue("Exchange rates map should include ETH greater than zero", exchangeRates2.getExchangeRateByCurrency("ETH").getPrice() > 0);
-        assertTrue("Exchange rates map should include LTC greater than zero", exchangeRates2.getExchangeRateByCurrency("LTC").getPrice() > 0);
-        assertTrue("Exchange rates map should include USD greater than zero", exchangeRates2.getExchangeRateByCurrency("USD").getPrice() > 0);
-
-        assertNotNull("Exchange rates timestamp should exist", exchangeRates2.getTimestamp());
     }
 }

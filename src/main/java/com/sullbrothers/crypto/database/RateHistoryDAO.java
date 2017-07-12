@@ -97,7 +97,9 @@ public class RateHistoryDAO {
         int rateHistoryId = CryptomancerDatabase.runUpdate(String.format(PUT_BASE_STMT_SOURCE, timestampStr, BTC, ETH, LTC, USD, source, timestampStr, BTC, ETH, LTC, USD, source));
 
         for (ExchangeRate r : rates.getExchangeRates()) {
-            CryptomancerDatabase.runUpdate(getPutDetailStatementWithSource(rateHistoryId, r, source));
+        	if (!r.getCurrency().equalsIgnoreCase(r.getFromCurrency())) {
+        		CryptomancerDatabase.runUpdate(getPutDetailStatementWithSource(rateHistoryId, r, source));
+        	}
         }
 
         RateHistory rh = new RateHistory(timestamp, rates);
