@@ -62,12 +62,13 @@ public class RateHistoryDAO {
 
     public RateHistoryDAO (Date timestamp, ExchangeRates rates) throws SQLException{
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
+        
+        ExchangeRate er;
         String timestampStr = df.format(timestamp);
-        Double BTC = ((BTC = rates.getExchangeRateByCurrency("BTC").getPrice()) != null) ? BTC : 0.0;
-        Double ETH = ((ETH = rates.getExchangeRateByCurrency("ETH").getPrice()) != null) ? ETH : 0.0;
-        Double LTC = ((LTC = rates.getExchangeRateByCurrency("LTC").getPrice()) != null) ? LTC : 0.0;
-        Double USD = ((USD = rates.getExchangeRateByCurrency("USD").getPrice()) != null) ? USD : 0.0;        
+        Double BTC = ((er = rates.getExchangeRateByCurrency("BTC")) != null) ? er.getPrice() : 0.0;
+        Double ETH = ((er = rates.getExchangeRateByCurrency("ETH")) != null) ? er.getPrice() : 0.0;
+        Double LTC = ((er = rates.getExchangeRateByCurrency("LTC")) != null) ? er.getPrice() : 0.0;
+        Double USD = ((er = rates.getExchangeRateByCurrency("USD")) != null) ? er.getPrice() : 0.0;
 
         System.out.println("Running query: " + String.format(PUT_BASE_STMT, timestampStr, BTC, ETH, LTC, USD, timestampStr, BTC, ETH, LTC, USD));
         int rateHistoryId = CryptomancerDatabase.runUpdate(String.format(PUT_BASE_STMT, timestampStr, BTC, ETH, LTC, USD, timestampStr, BTC, ETH, LTC, USD));
@@ -84,12 +85,13 @@ public class RateHistoryDAO {
 
     public RateHistoryDAO (Date timestamp, ExchangeRates rates, String source) throws SQLException{
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
+        
+        ExchangeRate er;
         String timestampStr = df.format(timestamp);
-        Double BTC = ((BTC = rates.getExchangeRateByCurrency("BTC").getPrice()) != null) ? BTC : 0.0;
-        Double ETH = ((ETH = rates.getExchangeRateByCurrency("ETH").getPrice()) != null) ? ETH : 0.0;
-        Double LTC = ((LTC = rates.getExchangeRateByCurrency("LTC").getPrice()) != null) ? LTC : 0.0;
-        Double USD = ((USD = rates.getExchangeRateByCurrency("USD").getPrice()) != null) ? USD : 0.0; 
+        Double BTC = ((er = rates.getExchangeRateByCurrency("BTC")) != null) ? er.getPrice() : 0.0;
+        Double ETH = ((er = rates.getExchangeRateByCurrency("ETH")) != null) ? er.getPrice() : 0.0;
+        Double LTC = ((er = rates.getExchangeRateByCurrency("LTC")) != null) ? er.getPrice() : 0.0;
+        Double USD = ((er = rates.getExchangeRateByCurrency("USD")) != null) ? er.getPrice() : 0.0;
 
         System.out.println("Running query: " + String.format(PUT_BASE_STMT_SOURCE, timestampStr, BTC, ETH, LTC, USD, source, timestampStr, BTC, ETH, LTC, USD, source));
         int rateHistoryId = CryptomancerDatabase.runUpdate(String.format(PUT_BASE_STMT_SOURCE, timestampStr, BTC, ETH, LTC, USD, source, timestampStr, BTC, ETH, LTC, USD, source));

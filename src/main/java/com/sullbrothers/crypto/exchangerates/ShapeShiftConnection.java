@@ -59,15 +59,15 @@ public class ShapeShiftConnection{
 					
 				}
 
-				ExchangeRate exchangeRate = new ExchangeRate(fromCurrency.toUpperCase());
-				exchangeRate.setFromCurrency(fromCurrency.toUpperCase());
-				exchangeRate.setPrice(1.0);
-
-				exchangeRates.add(exchangeRate);
-				System.out.println(fromCurrency.toUpperCase() + ": " + exchangeRate);
-
 				conn.disconnect();
 			}
+			
+			ExchangeRate exchangeRate = new ExchangeRate(fromCurrency.toUpperCase());
+			exchangeRate.setFromCurrency(fromCurrency.toUpperCase());
+			exchangeRate.setPrice(1.0);
+
+			exchangeRates.add(exchangeRate);
+			System.out.println(fromCurrency.toUpperCase() + ": " + exchangeRate);
 
 	  	} catch (MalformedURLException e) {
 

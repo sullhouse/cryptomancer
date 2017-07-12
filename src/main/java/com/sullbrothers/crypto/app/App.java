@@ -49,6 +49,7 @@ public class App
                         System.out.println("Ran into an issue getting latest exchange rates!");
                         //TODO: handle exception
                     }
+                    break;
                 default:
                     System.out.println( "Unrecognized argument: " + arg );
                     break;
@@ -76,7 +77,6 @@ public class App
                 exchangeRates.getExchangeRatesFromCryptoCompare("BTC,ETH,LTC,USD");
                 break;
         }
-        exchangeRates.getExchangeRatesFromCryptoCompare("BTC,ETH,LTC,USD");
-        new RateHistoryDAO(new Date(), exchangeRates);
+        new RateHistoryDAO(new Date(), exchangeRates, source);
     }
 }

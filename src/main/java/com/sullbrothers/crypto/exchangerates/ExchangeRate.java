@@ -3,7 +3,7 @@ package com.sullbrothers.crypto.exchangerates;
 import java.util.Date;
 
 public class ExchangeRate {
-    private String currency;
+	private String currency;
     private String fromCurrency;
     private int type;
     private String market;
@@ -188,4 +188,27 @@ public class ExchangeRate {
     public String getMarket() {
         return this.market;
     }
+
+	@Override
+	public String toString() {
+		return "ExchangeRate [" + (currency != null ? "currency=" + currency + ", " : "")
+				+ (fromCurrency != null ? "fromCurrency=" + fromCurrency + ", " : "") + "type=" + type + ", "
+				+ (market != null ? "market=" + market + ", " : "") + "flags=" + flags + ", "
+				+ (price != null ? "price=" + price + ", " : "")
+				+ (lastUpdate != null ? "lastUpdate=" + lastUpdate + ", " : "")
+				+ (lastVolume != null ? "lastVolume=" + lastVolume + ", " : "")
+				+ (lastVolumeTo != null ? "lastVolumeTo=" + lastVolumeTo + ", " : "") + "lastTradeId=" + lastTradeId
+				+ ", " + (volume24hour != null ? "volume24hour=" + volume24hour + ", " : "")
+				+ (volume24hourTo != null ? "volume24hourTo=" + volume24hourTo + ", " : "")
+				+ (open24hour != null ? "open24hour=" + open24hour + ", " : "")
+				+ (high24hour != null ? "high24hour=" + high24hour + ", " : "")
+				+ (low24hour != null ? "low24hour=" + low24hour + ", " : "")
+				+ (lastMarket != null ? "lastMarket=" + lastMarket + ", " : "")
+				+ (change24hour != null ? "change24hour=" + change24hour + ", " : "")
+				+ (changePct24hour != null ? "changePct24hour=" + changePct24hour + ", " : "")
+				+ (supply != null ? "supply=" + supply + ", " : "")
+				+ (marketCap != null ? "marketCap=" + marketCap : "") + "]";
+	}
+    
+    
 }
