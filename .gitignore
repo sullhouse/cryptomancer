@@ -12,6 +12,9 @@
 *.xlsm
 *.xls
 
+# Help text
+help.txt
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 

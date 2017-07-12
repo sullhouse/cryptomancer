@@ -1,9 +1,5 @@
 package com.sullbrothers.crypto.app;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Date;
@@ -22,20 +18,7 @@ public class App
             String arg = args[i].toLowerCase();
             switch (arg) {
             	case "-h": case "--h": case "-help": case "--help":
-					try {
-						BufferedReader in = new BufferedReader(new FileReader("help.txt"));
-						String line;
-						while((line = in.readLine()) != null) {
-						    System.out.println(line);
-						}
-						in.close();
-					} catch (FileNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					System.out.print(help());
 					break;
                 case "-gr":
                     i++;
@@ -101,5 +84,36 @@ public class App
 	        }
 	        new RateHistoryDAO(new Date(), exchangeRates, source);
         }
+    }
+    
+    private static String help() {
+    	String help = 
+"CryptoMancer application by sullbrothers. © 2017\n" +
+"\n" +
+"Usage:\n" +
+"	java -jar [CryptoMancer].jar [command] [option]\n" +
+"\n" +
+"Commands:\n" +
+"	-gr	[sources]	: 	Get current exchange rates from specified source and persist to \n" +
+"						database. List of supported sources below. Separate multiple sources \n" +
+"						with a comma and no spaces.\n" +
+"	-h,--h,-help,\n" +
+"		--help		:	View this help guide.\n" +
+"	-uw				: 	Update all known wallets with their known balance in Coinbase.\n" +
+"\n" +
+"Examples:\n" +
+"	java -jar [CryptoMancer].jar -gr CryptoCompare\n" +
+"					:	Get current exchange rates from CryptoCompare and persist to database.\n" +
+"	java -jar [CryptoMancer].jar -gr CryptoCompare,ShapeShift\n" +
+"					:	Get current exchange rates from both CryptoCompare and ShapeShift and\n" + 
+"						persist to database.\n" +
+"	java -jar [CryptoMancer].jar -uw\n" +
+"					:	Update all wallets with their known balance in Coinbase.\n" +
+"\n" +
+"Supported Exchange Rate Sources:\n" +
+"	CryptoCompare\n" +
+"	ShapeShift\n" +
+"	Coinbase";
+    	return help;
     }
 }
