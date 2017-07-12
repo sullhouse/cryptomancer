@@ -1,0 +1,26 @@
+CryptoMancer application by sullbrothers. © 2017
+
+Usage:
+	java -jar [CryptoMancer].jar [command] [option]
+	
+Commands:
+	-gr	[sources]	: 	Get current exchange rates from specified source and persist to 
+						database. List of supported sources below. Separate multiple sources 
+						with a comma and no spaces.
+	-h,--h,-help,
+		--help		:	View this help guide.
+	-uw				: 	Update all known wallets with their known balance in Coinbase.
+
+Examples:
+	java -jar [CryptoMancer].jar -gr CryptoCompare
+					:	Get current exchange rates from CryptoCompare and persist to database.
+	java -jar [CryptoMancer].jar -gr CryptoCompare,ShapeShift
+					:	Get current exchange rates from both CryptoCompare and ShapeShift and 
+						persist to database.
+	java -jar [CryptoMancer].jar -uw
+					:	Update all wallets with their known balance in Coinbase.
+
+Supported Exchange Rate Sources:
+	CryptoCompare
+	ShapeShift
+	Coinbase
