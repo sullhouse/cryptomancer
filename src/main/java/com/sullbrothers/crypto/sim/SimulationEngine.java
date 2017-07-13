@@ -8,6 +8,7 @@ import java.util.List;
 import com.sullbrothers.crypto.database.CurrencyValuesDAO;
 import com.sullbrothers.crypto.database.RateHistoryDAO;
 import com.sullbrothers.crypto.mancer.DecisionInterface;
+import com.sullbrothers.crypto.mancer.DecisionSuite;
 import com.sullbrothers.crypto.mancer.MancerAction;
 import com.sullbrothers.crypto.mancer.MancerState;
 
@@ -35,7 +36,7 @@ public class SimulationEngine {
         }
     }
 
-    public static String runSimulation(){
+    public static String runSimulation(DecisionSuite ds){
         StringBuilder toReturn = new StringBuilder();
 
         // Starting with some seed money for test purposes
@@ -54,7 +55,7 @@ public class SimulationEngine {
                 continue;
             }            
             getInstance().state.setCurrentRatePosition(getInstance().simPosition);
-            MancerAction toPerform = DecisionInterface.shouldPerform(getInstance().state, getInstance().simPosition++);
+            MancerAction toPerform = ds.shouldPerform(getInstance().state, getInstance().simPosition++);
             toReturn.append("Performing action " + toPerform == null ? "NO ACTION" : toPerform);
             toReturn.append(", SUCCESS?: " + purchase(toPerform) + "\n");
         }

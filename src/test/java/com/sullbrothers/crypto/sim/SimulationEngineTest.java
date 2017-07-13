@@ -1,5 +1,10 @@
 package com.sullbrothers.crypto.sim;
 
+import com.sullbrothers.crypto.mancer.DecisionInterface;
+import com.sullbrothers.crypto.mancer.DecisionSuite;
+
+import java.util.ArrayList;
+import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,6 +15,12 @@ import junit.framework.TestSuite;
 public class SimulationEngineTest 
     extends TestCase
 {
+    private static List<DecisionInterface> interfaces = new ArrayList<DecisionInterface>();
+
+    public static void addDecisionInterface(DecisionInterface i){
+        interfaces.add(i);
+    }
+
     /**
      * Create the test case
      *
@@ -34,7 +45,8 @@ public class SimulationEngineTest
     public void testSimulationEngine()
     {
         try{
-            System.out.println(SimulationEngine.runSimulation());
+            DecisionSuite ds = new DecisionSuite(interfaces);
+            System.out.println(SimulationEngine.runSimulation(ds));
         }
         catch(Exception e){
             e.printStackTrace();

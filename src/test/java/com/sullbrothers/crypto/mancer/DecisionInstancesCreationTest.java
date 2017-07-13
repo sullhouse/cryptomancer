@@ -9,6 +9,7 @@ import java.util.List;
 import com.sullbrothers.crypto.database.CurrencyValuesDAO;
 import com.sullbrothers.crypto.database.RateHistoryDAO;
 import com.sullbrothers.crypto.sim.SimulationEngine;
+import com.sullbrothers.crypto.sim.SimulationEngineTest;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -47,10 +48,12 @@ public class DecisionInstancesCreationTest
         try{
             List<RateHistoryDAO.RateHistory> rh = new RateHistoryDAO(Date.from(Instant.EPOCH), new Date()).getAllHistoricalRates();
             MancerState state = new MancerState(new CurrencyValuesDAO(), rh.get(0), rh);
-            Instances dataSet = DecisionInterface.generateDataSet(state, "mancerTest", SimulationEngine.HISTORICAL_RATIO);
-            String path = DecisionInterface.saveInstancesToFile(dataSet, "mancerTest.arff");
-            DecisionInterface.setClassifier(DecisionInterface.buildAndTrainClassifier(dataSet));
+            DecisionInterfaceJ48Impl decisionTree = new DecisionInterfaceJ48Impl();
+            Instances dataSet = decisionTree.generateDataSet(state, "mancerTest", SimulationEngine.HISTORICAL_RATIO);
+            String path = DecisionInterfaceUtils.saveInstancesToFile(dataSet, "mancerTest.arff");
+            decisionTree.setClassifier(decisionTree.buildAndTrainClassifier(dataSet));
             assertTrue(path != null && !path.equalsIgnoreCase("failure") && new File(path).isFile());
+            SimulationEngineTest.addDecisionInterface(decisionTree);
         }
         catch(SQLException e){
             e.printStackTrace();
