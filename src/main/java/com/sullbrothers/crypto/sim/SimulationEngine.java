@@ -7,7 +7,6 @@ import java.util.List;
 
 import com.sullbrothers.crypto.database.CurrencyValuesDAO;
 import com.sullbrothers.crypto.database.RateHistoryDAO;
-import com.sullbrothers.crypto.mancer.DecisionInterface;
 import com.sullbrothers.crypto.mancer.DecisionSuite;
 import com.sullbrothers.crypto.mancer.MancerAction;
 import com.sullbrothers.crypto.mancer.MancerState;
